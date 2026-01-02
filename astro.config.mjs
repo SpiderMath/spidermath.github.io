@@ -8,6 +8,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   integrations: [mdx()],
 
+  site: "https://spidermath.github.io",
+
   vite: {
     plugins: [tailwindcss()]
   }
