@@ -3,18 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "npx astro dev",
+    "build": "npx astro build",
+    "preview": "npx astro preview",
+    "astro": "npx astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.6",
     "tailwindcss": "^4.1.18"
   },
-  "description": "```sh npm create astro@latest -- --template minimal ```",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -22,9 +20,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "The Unlicense",
   "bugs": {
     "url": "https://github.com/SpiderMath/spidermath.github.io/issues"
   },
-  "homepage": "https://github.com/SpiderMath/spidermath.github.io#readme"
+  "homepage": "https://github.com/SpiderMath/spidermath.github.io#readme",
+  "devDependencies": {
+    "astro": "^5.16.11"
+  }
 }

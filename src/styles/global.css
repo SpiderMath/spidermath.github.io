@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* This entire block is for themeing the site */
+
+@theme {
+    /* Background: Catppuccin 'Base' (Soft dark grey-blue) */
+    --color-bg-main: #1e1e2e;
+
+    /* Brand: Mauve (The signature Catppuccin pastel purple) */
+    --color-brand: #cba6f7;       
+
+    /* Brand Light: Pink (Pastel Pink for hover/light) */
+    --color-brand-light: #f5c2e7; 
+
+    /* Brand Dark: Red (Soft Red for active/borders) */
+    --color-brand-dark: #f38ba8;  
+
+    /* Text: Text (Off-white) */
+    --color-text-main: #cdd6f4;   
+
+    /* Text Muted: Overlay 1 (Good contrast grey) */
+    --color-text-muted: #7f849c;  
+}
+
+/* I am working with a custom theme, this just sets the background to the theme background*/
+body {
+    background-color: var(--color-bg-main);
+}

@@ -1,0 +1,110 @@
+---
+import "../styles/global.css"
+const { brandName } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+// Simple helper to check if a link is active. 
+// We use a strict check to ensure no random issues (home should only have "/" for example)
+const isActive = (path) => currentPath === path;
+
+
+// --- Styling Factory (DO NOT TOUCH IT TOOK ME HOURS TO FIGURE THIS OUT PLEASE JUST DON'T) --- 
+// Here lie the desktop styles
+const deskBase = "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors";
+const deskActive = "border-brand text-text-main"; 
+const deskInactive = "border-transparent text-text-muted hover:border-brand-light hover:text-text-main";
+
+// Here lie the mobile styles
+const mobBase = "block pl-3 pr-4 py-2 border-l-4 text-base font-medium";
+const mobActive = "bg-brand-light border-brand text-brand-dark";
+const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 hover:border-brand-light hover:text-text-main";
+---
+
+<nav class="g-bg-main border-b border-text-main/10 w-full">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center h-16">
+			<div class="flex items-center">
+				<div class="flex-shrink-0 flex items-center">
+					<svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+					</svg>
+					<span class="ml-2 text-xl font-bold text-text-main">{brandName}</span>
+				</div>
+				<!-- Desktop Specific-->
+				<div class="hidden md:ml-10 md:flex md:space-x-8">
+					<a href="/" class:list={[deskBase, isActive('/') ? deskActive : deskInactive]}>
+						Home
+					</a>
+					
+					<a href="/about" class:list={[deskBase, isActive('/about') ? deskActive : deskInactive]}>
+						About Me
+					</a>
+					
+					<a href="/talks" class:list={[deskBase, isActive('/talks') ? deskActive : deskInactive]}>
+						Talks
+					</a>
+				</div>
+			</div>
+
+			<div class="flex items-center md:hidden">
+				<button id="hamburger-button" type="button" aria-expanded="false" aria-controls="mobile-menu" class="inline-flex items-center justify-center p-2 rounded-md text-text-muted hover:bg-text-main/10 focus:outline-none">
+					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- --- Mobile Menu --- -->
+	<div id="mobile-menu" class="hidden md:hidden">
+		<div class="pt-2 pb-3 space-y-1 bg-bg-main border-t border-text-main/10 shadow-sm">
+			<a href="/" class:list={[mobBase, isActive('/') ? mobActive : mobInactive]}>
+				Home
+			</a>
+
+			<a href="/about" class:list={[mobBase, isActive('/about') ? mobActive : mobInactive]}>
+				About Me
+			</a>
+
+			<a href="/talks" class:list={[mobBase, isActive('/talks') ? mobActive : mobInactive]}>
+				Talks
+			</a>
+
+			<a href="/fun" class:list={[mobBase, isActive('/fun') ? mobActive : mobInactive]}>
+				Fun
+			</a>
+
+			<a href="/certifications" class:list={[mobBase, isActive('/certifications') ? mobActive : mobInactive]}>
+				Certifications
+			</a>
+		</div>
+	</div>
+
+	<script>
+		const setup = () => {
+			const btn = document.getElementById('hamburger-button');
+			const menu = document.getElementById('mobile-menu');
+			if (btn && menu) {
+				btn.onclick = () => {
+					const expanded = btn.getAttribute('aria-expanded') === 'true';
+					btn.setAttribute('aria-expanded', String(!expanded));
+					menu.classList.toggle('hidden');
+				};
+			}
+		};
+		setup();
+		document.addEventListener('astro:after-swap', setup);
+	</script>
+</nav>
+
+<!-- <nav class="navbar">
+		<a href="/" class="logo">{brandName}</a>
+
+		<ul class="nav-links">
+				<li><a href="/home">Home</a></li>
+				<li><a href="/talks">Talks</a></li>
+				<li><a href="/about">About Me</a></li>
+		</ul>
+</nav> -->
