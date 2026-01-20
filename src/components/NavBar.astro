@@ -8,6 +8,11 @@ const currentPath = Astro.url.pathname;
 // We use a strict check to ensure no random issues (home should only have "/" for example)
 const isActive = (path) => currentPath === path;
 
+const navLinks = [
+	{ name: "Home", href: "/" },
+	{ name: "About Me", href: "/about" },
+	{ name: "Talks", href: "/talks" },
+];
 
 // --- Styling Factory (DO NOT TOUCH IT TOOK ME HOURS TO FIGURE THIS OUT PLEASE JUST DON'T) --- 
 // Here lie the desktop styles
@@ -33,17 +38,17 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 				</div>
 				<!-- Desktop Specific-->
 				<div class="hidden md:ml-10 md:flex md:space-x-8">
-					<a href="/" class:list={[deskBase, isActive('/') ? deskActive : deskInactive]}>
-						Home
-					</a>
-					
-					<a href="/about" class:list={[deskBase, isActive('/about') ? deskActive : deskInactive]}>
-						About Me
-					</a>
-					
-					<a href="/talks" class:list={[deskBase, isActive('/talks') ? deskActive : deskInactive]}>
-						Talks
-					</a>
+					{navLinks.map(link => (
+						<a 
+							href={link.href} 
+							class:list={[
+								deskBase, 
+								isActive(link.href) ? deskActive : deskInactive
+							]}
+						>
+							{link.name}
+						</a>
+					))}
 				</div>
 			</div>
 
@@ -60,25 +65,17 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 	<!-- --- Mobile Menu --- -->
 	<div id="mobile-menu" class="hidden md:hidden">
 		<div class="pt-2 pb-3 space-y-1 bg-bg-main border-t border-text-main/10 shadow-sm">
-			<a href="/" class:list={[mobBase, isActive('/') ? mobActive : mobInactive]}>
-				Home
-			</a>
-
-			<a href="/about" class:list={[mobBase, isActive('/about') ? mobActive : mobInactive]}>
-				About Me
-			</a>
-
-			<a href="/talks" class:list={[mobBase, isActive('/talks') ? mobActive : mobInactive]}>
-				Talks
-			</a>
-
-			<a href="/fun" class:list={[mobBase, isActive('/fun') ? mobActive : mobInactive]}>
-				Fun
-			</a>
-
-			<a href="/certifications" class:list={[mobBase, isActive('/certifications') ? mobActive : mobInactive]}>
-				Certifications
-			</a>
+			{navLinks.map(link => (
+				<a 
+					href={link.href} 
+					class:list={[
+					mobBase, 
+					isActive(link.href) ? mobActive : mobInactive
+					]}
+				>
+					{link.name}
+				</a>
+			))}
 		</div>
 	</div>
 
