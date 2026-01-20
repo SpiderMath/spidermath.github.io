@@ -1,9 +1,70 @@
 ---
-// This is where the home page shall reside
-// Any code between --- shall be executed on page load
 import BaseLayout from "../layouts/BaseLayout.astro"
+import SocialButton from "../components/SocialButton.astro"
+
+// Importing the raw SVGs for the icons
+import githubIcon from "../assets/github.svg?raw"
+import linkedInIcon from "../assets/linkedin.svg?raw"
+import lichessIcon from "../assets/lichess.svg?raw"
+import chessComIcon from "../assets/chessCom.svg?raw"
+import codeforcesIcon from "../assets/codeforces.svg?raw"
+import leetcodeIcon from "../assets/leetcode.svg?raw"
 ---
 
 <BaseLayout pageTitle="Shankha Suvra Dam">
+    <main class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center">
+        <div class="relative mb-6">
+            <img
+                src="/face.jpg"
+                alt="Profile"
+                class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
+            />
+        </div>
 
+        <h1 class="mb-2 text-5xl font-bold tracking-tight text-brand">
+            Shankha Suvra Dam
+        </h1>
+
+        <p class="mb-8 text-xl font-medium text-text-muted">
+            Stumbling through a field of experiments
+        </p>
+
+        <div class="flex gap-4">
+            <SocialButton 
+                link="https://github.com/SpiderMath" 
+                icon={githubIcon} 
+                label="GitHub" 
+            />
+
+            <SocialButton
+                link="https://linkedin.com/in/thedefectivedetective"
+                icon={linkedInIcon}
+                label="LinkedIn"
+            />
+
+            <SocialButton
+                link="https://leetcode.com/u/rishimath/"
+                icon={leetcodeIcon}
+                label="Leetcode"
+            />
+
+            <SocialButton
+                link="https://lichess.org/@/RishiMath"
+                icon={lichessIcon}
+                label="Lichess"
+            />
+
+            <SocialButton
+                link="https://www.chess.com/member/RishiMath"
+                icon={chessComIcon}
+                label="Chess.com"
+            />
+
+            <SocialButton
+                link="https://codeforces.com/profile/rishimath"
+                icon={codeforcesIcon}
+                label="CodeForces"
+            />
+        </div>
+  </main>
 </BaseLayout>

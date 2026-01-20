@@ -5,7 +5,7 @@ const { brandName } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 // Simple helper to check if a link is active. 
-// We use a strict check to ensure no random issues (home should only have "/" for example)
+// Using a strict check to ensure no random issues (home should only have "/" for example)
 const isActive = (path) => currentPath === path;
 
 const navLinks = [
@@ -31,10 +31,8 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 		<div class="flex justify-between items-center h-16">
 			<div class="flex items-center">
 				<div class="flex-shrink-0 flex items-center">
-					<svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-					</svg>
-					<span class="ml-2 text-xl font-bold text-text-main">{brandName}</span>
+					<img src="/favicon_custom.svg" class="w-10 h-10"/>
+					<span class="ml-2 text-xl font-bold text-text-main whitespace-nowrap">{brandName}</span>
 				</div>
 				<!-- Desktop Specific-->
 				<div class="hidden md:ml-10 md:flex md:space-x-8">

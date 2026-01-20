@@ -1,17 +1,21 @@
 ---
 import Navbar from "../components/NavBar.astro";
 
-const brandName = "The Defective Detective";
-const { pageTitle } = Astro.props;
+const brandName = "Shankha Suvra Dam";
+const { pageTitle, frontmatter } = Astro.props;
+const displayTitle = pageTitle || frontmatter?.title || "Title Mein Hagg Diya";
 ---
 
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <!-- This is for utilising the default favicon -->
+        <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+        <!-- My own favicon >:)  -->
+        <link rel="icon" type="image/svg+xml" href="/favicon_custom.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>{pageTitle}</title>
+        <title>{displayTitle}</title>
     </head>
     <body>
         <Navbar brandName={brandName} />

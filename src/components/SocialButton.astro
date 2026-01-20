@@ -1,0 +1,32 @@
+---
+interface Props {
+  link: string;
+  icon: string;
+  label: string;
+}
+
+const { link, icon, label } = Astro.props;
+---
+
+<a
+  href={link}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={label}
+  class="
+    flex items-center justify-center rounded-xl border-2 p-3 transition-all w-14 h-14
+    
+    /* STYLE: Brand Border, White Icon */
+    border-brand
+    text-text-main
+    
+    /* HOVER: Brand Fill, Dark Icon */
+    hover:bg-brand
+    hover:text-bg-main
+    hover:shadow-[0_0_20px_rgba(203,166,247,0.3)]
+  "
+>
+  <div class="w-6 h-6">
+    <Fragment set:html={icon} />
+  </div>
+</a>
