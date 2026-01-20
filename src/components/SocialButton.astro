@@ -14,13 +14,17 @@ const { link, icon, label } = Astro.props;
   rel="noopener noreferrer"
   aria-label={label}
   class="
-    flex items-center justify-center rounded-xl border-2 p-3 transition-all w-14 h-14
+    /* LAYOUT & POSITIONING */
+    group relative flex items-center justify-center 
+    w-14 h-14 
+    rounded-xl border-2 p-3 
+    transition-all
     
-    /* STYLE: Brand Border, White Icon */
+    /* COLORS */
     border-brand
     text-text-main
     
-    /* HOVER: Brand Fill, Dark Icon */
+    /* HOVER STATES */
     hover:bg-brand
     hover:text-bg-main
     hover:shadow-[0_0_20px_rgba(203,166,247,0.3)]
@@ -29,4 +33,23 @@ const { link, icon, label } = Astro.props;
   <div class="w-6 h-6">
     <Fragment set:html={icon} />
   </div>
+
+  <span class="
+    absolute bottom-full mb-3 left-1/2 -translate-x-1/2
+    w-auto min-w-max px-2 py-1
+    rounded-md
+    text-xs font-bold
+    text-bg-main bg-brand
+    opacity-0 scale-90
+    group-hover:opacity-100 group-hover:scale-100
+    transition-all duration-200 ease-out
+    pointer-events-none
+  ">
+    {label}
+    
+    <span class="
+        absolute top-full left-1/2 -translate-x-1/2 
+        border-4 border-transparent border-t-brand
+    "></span>
+  </span>
 </a>

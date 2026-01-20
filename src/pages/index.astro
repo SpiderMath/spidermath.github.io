@@ -2,6 +2,39 @@
 import BaseLayout from "../layouts/BaseLayout.astro"
 import SocialButton from "../components/SocialButton.astro"
 
+const socialData = [
+	{
+		label: "GitHub",
+		icon: githubIcon,
+		link: "https://github.com/SpiderMath/",
+	},
+	{
+		label: "LinkedIn",
+		icon: linkedInIcon,
+		link: "https://linkedin.com/in/thedefectivedetective/",
+	},
+	{
+		label: "LeetCode",
+		icon: leetcodeIcon,
+		link: "https://leetcode.com/u/rishimath/",
+	},
+	{
+		label: "Lichess",
+		icon: lichessIcon,
+		link: "https://lichess.org/@/RishMath/",
+	},
+	{
+		label: "Chess.com",
+		icon: chessComIcon,
+		link: "https://chess.com/member/RishiMath/",
+	},
+	{
+		label: "CodeForces",
+		icon: codeforcesIcon,
+		link: "https://codeforces.com/profile/rishimath",
+	}
+];
+
 // Importing the raw SVGs for the icons
 import githubIcon from "../assets/github.svg?raw"
 import linkedInIcon from "../assets/linkedin.svg?raw"
@@ -12,59 +45,31 @@ import leetcodeIcon from "../assets/leetcode.svg?raw"
 ---
 
 <BaseLayout pageTitle="Shankha Suvra Dam">
-    <main class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center">
-        <div class="relative mb-6">
-            <img
-                src="/face.jpg"
-                alt="Profile"
-                class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
-            />
-        </div>
+	<main class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center">
+		<div class="relative mb-6">
+			<img
+				src="/face.jpg"
+				alt="Profile"
+				class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
+			/>
+		</div>
 
-        <h1 class="mb-2 text-5xl font-bold tracking-tight text-brand">
-            Shankha Suvra Dam
-        </h1>
+		<h1 class="mb-2 text-5xl font-bold tracking-tight text-brand">
+			Shankha Suvra Dam
+		</h1>
 
-        <p class="mb-8 text-xl font-medium text-text-muted">
-            Stumbling through a field of experiments
-        </p>
+		<p class="mb-8 text-xl font-medium text-text-muted">
+			Stumbling through a field of experiments
+		</p>
 
-        <div class="flex gap-4">
-            <SocialButton 
-                link="https://github.com/SpiderMath" 
-                icon={githubIcon} 
-                label="GitHub" 
-            />
-
-            <SocialButton
-                link="https://linkedin.com/in/thedefectivedetective"
-                icon={linkedInIcon}
-                label="LinkedIn"
-            />
-
-            <SocialButton
-                link="https://leetcode.com/u/rishimath/"
-                icon={leetcodeIcon}
-                label="Leetcode"
-            />
-
-            <SocialButton
-                link="https://lichess.org/@/RishiMath"
-                icon={lichessIcon}
-                label="Lichess"
-            />
-
-            <SocialButton
-                link="https://www.chess.com/member/RishiMath"
-                icon={chessComIcon}
-                label="Chess.com"
-            />
-
-            <SocialButton
-                link="https://codeforces.com/profile/rishimath"
-                icon={codeforcesIcon}
-                label="CodeForces"
-            />
-        </div>
-  </main>
+		<div class="flex flex-wrap justify-center gap-4">
+			{socialData.map((social) => (
+				<SocialButton 
+				link={social.link} 
+				icon={social.icon} 
+				label={social.label} 
+				/>
+			))}
+		</div>
+	</main>
 </BaseLayout>
