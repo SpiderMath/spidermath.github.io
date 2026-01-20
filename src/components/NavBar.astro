@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css"
+import "../styles/global.css";
 const { brandName } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -31,7 +31,10 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 		<div class="flex justify-between items-center h-16">
 			<div class="flex items-center">
 				<div class="flex-shrink-0 flex items-center">
-					<img src="/favicon_custom.svg" class="w-10 h-10"/>
+					<img
+						src="/favicon_custom.svg"
+						alt="Page Logo"
+						class="w-10 h-10" />
 					<span class="ml-2 text-xl font-bold text-text-main whitespace-nowrap">{brandName}</span>
 				</div>
 				<!-- Desktop Specific-->

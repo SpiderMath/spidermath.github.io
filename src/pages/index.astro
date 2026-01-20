@@ -1,7 +1,20 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro"
-import SocialButton from "../components/SocialButton.astro"
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialButton from "../components/SocialButton.astro";
+import { Image } from "astro:assets";
 
+
+// Importing the raw SVGs for the icons
+import faceImage from "../assets/images/socialIcons/face.jpg"
+import githubIcon from "../assets/images/socialIcons/github.svg?raw"
+import linkedInIcon from "../assets/images/socialIcons/linkedin.svg?raw"
+import lichessIcon from "../assets/images/socialIcons/lichess.svg?raw"
+import chessComIcon from "../assets/images/socialIcons/chessCom.svg?raw"
+import codeforcesIcon from "../assets/images/socialIcons/codeforces.svg?raw"
+import leetcodeIcon from "../assets/images/socialIcons/leetcode.svg?raw"
+import youtubeIcon from "../assets/images/socialIcons/youtube.svg?raw"
+
+// setting the socialData
 const socialData = [
 	{
 		label: "GitHub",
@@ -21,7 +34,7 @@ const socialData = [
 	{
 		label: "Lichess",
 		icon: lichessIcon,
-		link: "https://lichess.org/@/RishMath/",
+		link: "https://lichess.org/@/RishiMath/",
 	},
 	{
 		label: "Chess.com",
@@ -32,23 +45,21 @@ const socialData = [
 		label: "CodeForces",
 		icon: codeforcesIcon,
 		link: "https://codeforces.com/profile/rishimath",
+	},
+	{
+		label: "YouTube",
+		icon: youtubeIcon,
+		link: "https://youtube.com/@thedefectivedetective/",
 	}
 ];
-
-// Importing the raw SVGs for the icons
-import githubIcon from "../assets/github.svg?raw"
-import linkedInIcon from "../assets/linkedin.svg?raw"
-import lichessIcon from "../assets/lichess.svg?raw"
-import chessComIcon from "../assets/chessCom.svg?raw"
-import codeforcesIcon from "../assets/codeforces.svg?raw"
-import leetcodeIcon from "../assets/leetcode.svg?raw"
 ---
 
 <BaseLayout pageTitle="Shankha Suvra Dam">
 	<main class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center">
 		<div class="relative mb-6">
-			<img
-				src="/face.jpg"
+			<Image
+				loading="eager"
+				src={faceImage}
 				alt="Profile"
 				class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
 			/>
@@ -59,7 +70,8 @@ import leetcodeIcon from "../assets/leetcode.svg?raw"
 		</h1>
 
 		<p class="mb-8 text-xl font-medium text-text-muted">
-			Stumbling through a field of experiments
+			Stumbling through a field of experiments <br>
+			3<sup>rd</sup> Year, B.Math., Indian Statistical Institute, Bengaluru Centre
 		</p>
 
 		<div class="flex flex-wrap justify-center gap-4">
