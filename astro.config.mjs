@@ -17,6 +17,9 @@ export default defineConfig({
                 // we can define custom LaTeX macros here
             }]
         ],
+        shikiConfig: {
+            theme: "catppuccin-mocha",
+        }
     },
 
     site: "https://spidermath.github.io",

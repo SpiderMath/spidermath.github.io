@@ -7,6 +7,7 @@ title: About Me!
 
 ```js
 console.log("Hi")
+const e = () => 10;
 ```
 
 [Hyperlinks](https://github.com/)
