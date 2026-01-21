@@ -1,5 +1,5 @@
 # Astro Starter Kit: Minimal
-
+>> Note from Author (Shankha):- I added `.vscode/settings.json` to deal with lack of recognition of @theme, @plugin etc stuff in css files.
 ```sh
 npm create astro@latest -- --template minimal
 ```

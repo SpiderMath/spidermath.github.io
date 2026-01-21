@@ -83,7 +83,7 @@ body {
 
     /* Table headings being centered is always sexy */
     th {
-        text-align: center;
+        text-align: center !important;
     }
 
 }
