@@ -22,11 +22,11 @@ const deskInactive = "border-transparent text-text-muted hover:border-brand-ligh
 
 // Here lie the mobile styles
 const mobBase = "block pl-3 pr-4 py-2 border-l-4 text-base font-medium";
-const mobActive = "bg-brand-light border-brand text-brand-dark";
+const mobActive = "bg-brand-light/10 border-brand text-brand-light";
 const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 hover:border-brand-light hover:text-text-main";
 ---
 
-<nav class="g-bg-main border-b border-text-main/10 w-full">
+<nav class="sticky top-0 z-50 w-full transition-colors duration-300 bg-bg-muted/80 backdrop-blur-md border-b border-text-muted/20">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between items-center h-16">
 			<div class="flex items-center">
@@ -65,7 +65,7 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 	
 	<!-- --- Mobile Menu --- -->
 	<div id="mobile-menu" class="hidden md:hidden">
-		<div class="pt-2 pb-3 space-y-1 bg-bg-main border-t border-text-main/10 shadow-sm">
+		<div class="pt-2 pb-3 space-y-1 bg-bg-muted/95 backdrop-blur-md border-t border-text-muted/20 shadow-xl"></div>
 			{navLinks.map(link => (
 				<a 
 					href={link.href} 
