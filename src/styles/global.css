@@ -4,30 +4,29 @@
 /* This entire block is for themeing the site */
 
 @theme {
-    /* Background: Catppuccin 'Base' (Soft dark grey-blue) */
-    --color-bg-main: #1e1e2e;
+    /* Background: Hard Dark (Deep Chocolate/Black) */
+    --color-bg-main: #1d2021;
 
-    /* We use Surface0 for catppuccin */
-    /* For elements that SIT on top of the background, like code blocks, cards, or sticky headers */
-    --color-bg-surface: #313244;
+    /* Surface: Material Dark */
+    --color-bg-surface: #32302f;
 
-    /* We utilise Mantle for catppuccin */
-    --color-bg-muted: #181825;
+    /* Muted: Darker */
+    --color-bg-muted: #141617;
 
-    /* Brand: Mauve (The signature Catppuccin pastel purple) */
-    --color-brand: #cba6f7;
+    /* Brand: Forest Green */
+    --color-brand: #a9b665;
 
-    /* Brand Light: Pink (Pastel Pink for hover/light) */
-    --color-brand-light: #f5c2e7;
+    /* Brand Light: Aqua */
+    --color-brand-light: #89b482;
 
-    /* Brand Dark: Red (Soft Red for active/borders) */
-    --color-brand-dark: #f38ba8;
+    /* Brand Dark: Burnt Orange/Red */
+    --color-brand-dark: #ea6962;
 
-    /* Text: Text (Off-white) */
-    --color-text-main: #cdd6f4; 
+    /* Text: Milk White */
+    --color-text-main: #d4be98;
 
-    /* Text Muted: Overlay 1 (Good contrast grey) */
-    --color-text-muted: #7f849c;
+    /* Text Muted: Grey-Brown */
+    --color-text-muted: #7c6f64;
 
     --font-mono: "Fira Code";
 }
