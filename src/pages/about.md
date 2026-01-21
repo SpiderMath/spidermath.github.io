@@ -5,15 +5,19 @@ title: About Me!
 
 # Hello World
 
-<summary>
-    This is just some random stuff
-</summary>
-<detail>What</detail>
-
 ```js
 console.log("Hi")
 ```
 
 [Hyperlinks](https://github.com/)
 
-**Bold**, __underline__, *italics*, ~~strikethrough~~, `something ig`
+**Bold**, *italics*, ~~strikethrough~~, `something ig`
+
+1. Hi
+2. Bye?
+- Why?
+> What the hell are we doing here?
+
+| Table | Title | Titled |
+| :- | :-: | -: |
+| This should be aligned left! | This should be centered | This should be aligned right? |

@@ -19,6 +19,8 @@ const displayTitle = pageTitle || frontmatter?.title || "Title Mein Hagg Diya";
     </head>
     <body>
         <Navbar brandName={brandName} />
-        <slot />
+        <main class="max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin">
+            <slot />
+        </main>
     </body>
 </html>

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* This entire block is for themeing the site */
 
@@ -25,4 +26,41 @@
 /* I am working with a custom theme, this just sets the background to the theme background*/
 body {
     background-color: var(--color-bg-main);
+}
+
+@utility prose-catppuccin {
+    @apply prose prose-invert max-w-none;
+    @apply prose-headings:text-brand prose-headings:font-bold;
+    @apply prose-p:text-text-main prose-p:leading-relaxed;
+
+    /* For hyperlinks, base default look */
+    @apply prose-a:text-brand-light prose-a:underline prose-a:decoration-auto;
+    /* Smooth transition for color swaps */
+    @apply prose-a:transition-colors prose-a:duration-200 prose-a:ease-in-out;
+    /* Slight padding with negative margin for a better-looking highlight box (suggested by Souvik) */
+    @apply prose-a:rounded-sm prose-a:-mx-0.5 prose-a:px-0.5;
+
+    /* For rendering code */
+    @apply prose-code:text-brand-light prose-code:bg-[#313244] prose-code:px-1 prose-code:rounded;
+    /* If I put `hello`, then usually, we see `hello` as code on the side (backticks included)
+        I don't want that, hence I need to disable the before and after for the code, sad.
+    */
+    @apply prose-code:before:content-none prose-code:after:content-none;
+
+    /* Just for bold, yes */
+    @apply prose-strong:text-brand-light;
+}
+
+/* .prose-catppuccin a:hover {
+    color: var(--color-brand);
+    border-bottom-color: var(--color-brand);
+} */
+
+.prose-catppuccin a:hover {
+    /* Background becomes the bright brand color */
+    background-color: var(--color-brand-light);
+    /* Text becomes dark for readability against the bright background */
+    color: var(--color-bg-main);
+    /* Remove the underline on hover for a nice look */
+    text-decoration: none;
 }
