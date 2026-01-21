@@ -4,17 +4,27 @@ import "katex/dist/katex.min.css";
 import "@fontsource/fira-code";
 
 const brandName = "Shankha Suvra Dam";
-const { pageTitle, frontmatter, description, image } = Astro.props;
+// loading our Astro properties
+const { pageTitle, frontmatter, description, image, backgroundImage } = Astro.props;
 const metaDescription = description || frontmatter?.description;
 const displayImage = image || frontmatter?.image;
 const displayTitle = pageTitle || frontmatter?.title;
+const bgImage = backgroundImage || frontmatter?.backgroundImage;
 
+// Validating our availability of a title, description and display image
 if (!displayTitle) throw new Error(`❌ MISSING TITLE: The page "${Astro.url.pathname}" has no title!`);
 if (!metaDescription) throw new Error(`❌ MISSING DESCRIPTION: The page "${Astro.url.pathname}" has no description!`);
 if (!displayImage) throw new Error(`❌ MISSING IMAGE: The page "${Astro.url.pathname}" has no image!`);
 
+// SEO BS
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(displayImage, Astro.site);
+
+// Acrylic Background Images
+const bodyStyle = bgImage ? `background-image: url('${bgImage}')` : "";
+const bodyClass = bgImage ? `bg-cover bg-center bg-fixed min-h-screen text-text-main` : "bg-bg-main min-h-screen text-text-main";
+
+const mainClass = bgImage ? "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin bg-bg-main/85 backdrop-blur-md rounded-xl shadow-2xl border border-text-muted/20 my-10" : "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin"
 ---
 
 <html lang="en">
@@ -48,9 +58,9 @@ const socialImageURL = new URL(displayImage, Astro.site);
 
         <script src="../scripts/copyCode.js"/>
     </head>
-    <body>
+    <body style={bodyStyle} class={bodyClass}>
         <Navbar brandName={brandName} />
-        <main class="max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin">
+        <main class={mainClass}>
             <slot />
         </main>
     </body>
