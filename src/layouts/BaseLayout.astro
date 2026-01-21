@@ -4,8 +4,17 @@ import "katex/dist/katex.min.css";
 import "@fontsource/fira-code";
 
 const brandName = "Shankha Suvra Dam";
-const { pageTitle, frontmatter } = Astro.props;
-const displayTitle = pageTitle || frontmatter?.title || "Title Mein Hagg Diya";
+const { pageTitle, frontmatter, description, image } = Astro.props;
+const metaDescription = description || frontmatter?.description;
+const displayImage = image || frontmatter?.image;
+const displayTitle = pageTitle || frontmatter?.title;
+
+if (!displayTitle) throw new Error(`❌ MISSING TITLE: The page "${Astro.url.pathname}" has no title!`);
+if (!metaDescription) throw new Error(`❌ MISSING DESCRIPTION: The page "${Astro.url.pathname}" has no description!`);
+if (!displayImage) throw new Error(`❌ MISSING IMAGE: The page "${Astro.url.pathname}" has no image!`);
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(displayImage, Astro.site);
 ---
 
 <html lang="en">
@@ -17,7 +26,25 @@ const displayTitle = pageTitle || frontmatter?.title || "Title Mein Hagg Diya";
         <link rel="icon" type="image/svg+xml" href="/favicon_custom.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
+
         <title>{displayTitle}</title>
+
+        <!-- This is all just SEO BULLSHIT -->
+        <meta name="title" content={displayTitle} />
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalURL} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:title" content={displayTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={socialImageURL} />
+
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:title" content={displayTitle} />
+        <meta property="twitter:description" content={metaDescription} />
+        <meta property="twitter:image" content={socialImageURL} />
 
         <script src="../scripts/copyCode.js"/>
     </head>
