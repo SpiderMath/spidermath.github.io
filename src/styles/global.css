@@ -35,6 +35,7 @@ body {
     background-color: var(--color-bg-main);
 }
 
+
 @utility prose-catppuccin {
     @apply prose prose-invert max-w-none;
     @apply prose-headings:text-brand prose-headings:font-bold;
@@ -85,4 +86,13 @@ body {
     color: var(--color-bg-main);
     /* Remove the underline on hover for a nice look */
     text-decoration: none;
+}
+
+/* --- LaTeX in Markdown --- */
+/* This one is only for helping mobile users read long asf LaTeX stuff */
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }

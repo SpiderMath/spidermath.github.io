@@ -23,4 +23,6 @@ console.log("Hi")
 | This should be aligned left! | This should be centered | This should be aligned right? |
 | Next row | Is it really though | I think so |
 
-$x=10$
+$$
+    \sum_{i=0}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+$$

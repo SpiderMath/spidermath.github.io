@@ -1,5 +1,6 @@
 ---
 import Navbar from "../components/NavBar.astro";
+import "katex/dist/katex.min.css";
 
 const brandName = "Shankha Suvra Dam";
 const { pageTitle, frontmatter } = Astro.props;
@@ -16,6 +17,13 @@ const displayTitle = pageTitle || frontmatter?.title || "Title Mein Hagg Diya";
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{displayTitle}</title>
+
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+            integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvLMwVqD3y1o+"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
         <Navbar brandName={brandName} />
