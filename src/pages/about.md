@@ -21,3 +21,6 @@ console.log("Hi")
 | Table | Title | Titled |
 | :- | :-: | -: |
 | This should be aligned left! | This should be centered | This should be aligned right? |
+| Next row | Is it really though | I think so |
+
+$x=10$
