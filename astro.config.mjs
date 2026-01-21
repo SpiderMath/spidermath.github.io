@@ -18,7 +18,7 @@ export default defineConfig({
             }]
         ],
         shikiConfig: {
-            theme: "catppuccin-mocha",
+            theme: "gruvbox-dark-hard",
             wrap: true,
         }
     },
