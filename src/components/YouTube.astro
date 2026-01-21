@@ -1,0 +1,26 @@
+---
+interface Props {
+    id: string;
+    label?: string;
+    rel?: boolean;
+}
+
+/**
+ * id - YouTube Video ID
+ * label - Label for the YouTube Video for Accessibility, technically could've made it optional but I ain't gonna ever become this sloppy man wtf, this is unfair to those who need this!
+ * rel - If rel is true, then the viewers shall be able to view any related YouTube videos (normal suggestions and all that), if rel is false, then we append "?rel=0", which makes them only view the contents of that particular channel
+ *      By default, I want it to be false, because I hate the spammy-ness of YouTube
+*/
+const { id, label, rel = false } = Astro.props;
+---
+
+<div class="w-full aspect-video rounded-lg overflow-hidden border border-text-muted shadow-lg my-6 relative bg-bg-surface">
+    <iframe
+        src={`https://www.youtube.com/embed/${id}${!rel ? "" : "?rel=0"}`}
+        title={label}
+        class="absolute top-0 left-0 w-full h-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+    ></iframe>
+</div>

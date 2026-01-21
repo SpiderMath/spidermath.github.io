@@ -19,6 +19,7 @@ export default defineConfig({
         ],
         shikiConfig: {
             theme: "catppuccin-mocha",
+            wrap: true,
         }
     },
 
