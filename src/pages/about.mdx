@@ -3,6 +3,7 @@ layout: ../layouts/BaseLayout.astro
 title: About Me!
 ---
 import YouTube from "../components/YouTube.astro";
+import PDFiFrame from "../components/PDFiFrame.astro"
 
 # Hello World
 
@@ -25,8 +26,10 @@ const e = () => 10;
 | This should be aligned left! | This should be centered | This should be aligned right? |
 | Next row | Is it really though | I think so |
 
-$$
+// @acorn-ignore
+{/* $$
     \sum_{i=0}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
-$$
+$$ */}
 
 <YouTube id="MsNHPiNaFCE" label="rick roll"/>
+<PDFiFrame file="master_cv.pdf" title="Curriculum Vitae"/>
