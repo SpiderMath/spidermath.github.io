@@ -4,7 +4,6 @@ import SocialButton from "../components/SocialButton.astro";
 import { Image } from "astro:assets";
 
 // Importing the raw SVGs for the icons
-import faceImage from "../assets/images/socialIcons/face.jpg"
 import githubIcon from "../assets/images/socialIcons/github.svg?raw"
 import linkedInIcon from "../assets/images/socialIcons/linkedin.svg?raw"
 import lichessIcon from "../assets/images/socialIcons/lichess.svg?raw"
@@ -56,13 +55,15 @@ const socialData = [
 <BaseLayout
 	pageTitle="Shankha Suvra Dam"
 	description="Welcome to Shankha Suvra Dam's personal website!"
-	image="/favicon.svg" >
+	image="/favicon_custom.svg" >
 	<main class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center">
 		<div class="relative mb-6">
 			<Image
 				loading="eager"
-				src={faceImage}
+				src="/images/face.jpg"
 				alt="Profile"
+				height=80
+				width=80
 				class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
 			/>
 		</div>
