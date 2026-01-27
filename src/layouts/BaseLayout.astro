@@ -1,5 +1,7 @@
 ---
 import Navbar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import { ClientRouter, slide } from 'astro:transitions';
 import "katex/dist/katex.min.css";
 import "@fontsource/fira-code";
 
@@ -57,11 +59,14 @@ const mainClass = bgImage ? "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuc
         <meta property="twitter:image" content={socialImageURL} />
 
         <script src="../scripts/copyCode.js"/>
+        <ClientRouter />
     </head>
     <body style={bodyStyle} class={bodyClass}>
         <Navbar brandName={brandName} />
-        <main class={mainClass}>
+        <main class={mainClass} transition:animate={slide({ duration: "0.8s", easing: "ease-in-out" })}>
             <slot />
         </main>
+
+        <Footer />
     </body>
 </html>
