@@ -1,4 +1,6 @@
 ---
+import Icon from "./Icon.astro";
+
 interface Props {
 	type?: "note" | "tip" | "warning" | "danger";
 	title?: string;
@@ -18,41 +20,41 @@ const {
 const configs = {
 	note: {
 		colorClass: "text-brand-light border-l-brand-light bg-brand-light/10",
-		defaultIcon: "📝",
+		iconName: "note",
 		defaultTitle: "Note",
 	},
 	tip: {
 		colorClass: "text-brand border-l-brand bg-brand/10",
-		defaultIcon: "💡",
+		iconName: "tip",
 		defaultTitle: "Tip",
 	},
 	warning: {
 		colorClass: "text-brand-dark border-l-brand-dark bg-brand-dark/10",
-		defaultIcon: "⚠️",
+		iconName: "warning",
 		defaultTitle: "Warning",
 	},
 	danger: {
 		colorClass: "text-red-500 border-l-red-500 bg-red-500/10",
-		defaultIcon: "🔥",
+		iconName: "danger",
 		defaultTitle: "Danger",
 	},
 };
 
 const config = configs[type] || configs.note;
-const finalIcon = icon || config.defaultIcon;
+const finalIconName = icon || config.iconName;
 const finalTitle = title || config.defaultTitle;
 
 const containerClass = `my-6 w-full rounded-r-lg border-l-4 p-4 ${config.colorClass} border-opacity-100 bg-opacity-20 border border-text-muted/50`;
-const headerClass = "flex items-center gap-2 font-bold uppercase tracking-wider text-sm select-none mb-2";
+const headerClass = "flex items-center gap-2 font-bold font-mono text-sm select-none mb-2";
 ---
 
 {collapsible ? (
 	<details open={!collapsed} class=`${containerClass} group`>
 		<summary class=`${headerClass} cursor-pointer list-none flex items-center justify-between [&::-webkit-details-marker]:hidden`>
-			<div class="">
-				<span class="text-lg leading-none">
-					{finalIcon}
-				</span>
+			<div class="gap-2 flex items-center">
+				<div class="text-lg leading-none">
+					<Icon name={finalIconName} size={16} class="w-5 h-5" />
+				</div>
 				<span>
 					{finalTitle}
 				</span>
@@ -80,15 +82,15 @@ const headerClass = "flex items-center gap-2 font-bold uppercase tracking-wider 
 ) : (
 	<div class={containerClass}>
 		<div class={headerClass}>
-			<span class="text-lg leading-none">
-				{finalIcon}
-			</span>
+			<div class="text-lg leading-none">
+				<Icon name={finalIconName} size={16} class="w-5 h-5" />
+			</div>
 			<span>
 				{finalTitle}
 			</span>
 		</div>
 
-		<div class="prose-p:my-0 text-text-main">
+		<div class="prose-p:my-0 text-text-main mt-0">
 			<slot />
 		</div>
 	</div>
