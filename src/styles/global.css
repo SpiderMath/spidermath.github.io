@@ -109,3 +109,10 @@ code, pre {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
+
+/* Fixing for callout */
+/* So basically when we open a collapsible callout, the scrollbar may just randomly be like: OMAI WA BING CHILLING LET'S SPAWNNNN (might not have needed a scrollbar on the page previously)
+    and may cause it to kinda look like jittering, i.e. "looks" like the content moves a bit when we open the details thingy */
+html {
+    scrollbar-gutter: stable;
+}
