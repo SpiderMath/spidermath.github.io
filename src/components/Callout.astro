@@ -1,32 +1,38 @@
 ---
-/* src/components/Callout.astro */
-
 interface Props {
 	type?: "note" | "tip" | "warning" | "danger";
 	title?: string;
 	icon?: string;
+	collapsible?: boolean;
+	collapsed?: boolean;
 }
 
-const { type = "note", title, icon } = Astro.props;
+const {
+	type = "note",
+	title,
+	icon,
+	collapsed = false,
+	collapsible = false,
+} = Astro.props;
 
 const configs = {
 	note: {
-		colorClass: "text-brand-light border-brand-light bg-brand-light/10",
+		colorClass: "text-brand-light border-l-brand-light bg-brand-light/10",
 		defaultIcon: "📝",
 		defaultTitle: "Note",
 	},
 	tip: {
-		colorClass: "text-brand border-brand bg-brand/10",
+		colorClass: "text-brand border-l-brand bg-brand/10",
 		defaultIcon: "💡",
 		defaultTitle: "Tip",
 	},
 	warning: {
-		colorClass: "text-brand-dark border-brand-dark bg-brand-dark/10",
+		colorClass: "text-brand-dark border-l-brand-dark bg-brand-dark/10",
 		defaultIcon: "⚠️",
 		defaultTitle: "Warning",
 	},
 	danger: {
-		colorClass: "text-red-500 border-red-500 bg-red-500/10",
+		colorClass: "text-red-500 border-l-red-500 bg-red-500/10",
 		defaultIcon: "🔥",
 		defaultTitle: "Danger",
 	},
@@ -35,14 +41,55 @@ const configs = {
 const config = configs[type] || configs.note;
 const finalIcon = icon || config.defaultIcon;
 const finalTitle = title || config.defaultTitle;
+
+const containerClass = `my-6 w-full rounded-r-lg border-l-4 p-4 ${config.colorClass} border-opacity-100 bg-opacity-20 border border-text-muted/50`;
+const headerClass = "flex items-center gap-2 font-bold uppercase tracking-wider text-sm select-none mb-2";
 ---
 
-<div class={`my-6 w-full rounded-r-lg border-l-4 p-4 ${config.colorClass} border-opacity-100 bg-opacity-20`}>
-	<div class="flex items-center gap-2 mb-2 font-bold uppercase tracking-wider text-sm select-none">
-		<span class="text-lg leading-none">{finalIcon}</span>
-		<span>{finalTitle}</span>
+{collapsible ? (
+	<details open={!collapsed} class=`${containerClass} group`>
+		<summary class=`${headerClass} cursor-pointer list-none flex items-center justify-between [&::-webkit-details-marker]:hidden`>
+			<div class="">
+				<span class="text-lg leading-none">
+					{finalIcon}
+				</span>
+				<span>
+					{finalTitle}
+				</span>
+			</div>
+
+			<svg 
+				xmlns="http://www.w3.org/2000/svg" 
+				width="20" height="20" 
+				viewBox="0 0 24 24" 
+				fill="none" 
+				stroke="currentColor" 
+				stroke-width="2" 
+				stroke-linecap="round" 
+				stroke-linejoin="round"
+				class="text-text-muted opacity-50 transition-transform duration-200 group-open:rotate-180"
+			>
+				<polyline points="6 9 12 15 18 9"></polyline>
+			</svg>
+		</summary>
+
+		<div class="prose-p:my-0 text-text-main mt-0">
+			<slot />
+		</div>
+	</details>
+) : (
+	<div class={containerClass}>
+		<div class={headerClass}>
+			<span class="text-lg leading-none">
+				{finalIcon}
+			</span>
+			<span>
+				{finalTitle}
+			</span>
+		</div>
+
+		<div class="prose-p:my-0 text-text-main">
+			<slot />
+		</div>
 	</div>
-	<div class="prose-p:my-0 text-text-main">
-		<slot />
-	</div>
-</div>
+)}
