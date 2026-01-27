@@ -4,58 +4,64 @@ import Icon from "./Icon.astro";
 const today = new Date();
 ---
 
-<footer class="w-full border-t border-text-muted/20 bg-bg-surface mt-12">
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <div class="flex flex-col items-center text-center mb-8">
-            <blockquote class="font-mono text-sm text-text-muted italic max-w-lg">
-                "<span id="footer-quote-text">Loading wisdom...</span>"
-            </blockquote>
-            <cite id="footer-quote-author" class="text-xs text-brand mt-2 font-bold uppercase tracking-wider opacity-0 transition-opacity duration-500">
-            </cite>
-        </div>
+<footer class="w-full border-t border-text-muted/20 bg-bg-muted/80 mt-12 backdrop-blur-md">
+	<div class="max-w-4xl mx-auto px-4 py-8">
+		<div class="flex flex-col items-center text-center mb-8">
+			<blockquote class="font-mono text-sm text-text-muted italic max-w-lg">
+				"<span id="footer-quote-text">Loading wisdom...</span>"
+			</blockquote>
+			<cite id="footer-quote-author" class="text-xs text-brand mt-2 font-bold uppercase tracking-wider opacity-0 transition-opacity duration-500">
+			</cite>
+		</div>
 
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
-            <div>
-                &copy; {today.getFullYear()} Shankha Suvra Dam. All rights reserved.
-            </div>
+		<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
+			<div>
+				&copy; {today.getFullYear()} Shankha Suvra Dam. All rights reserved.
+			</div>
 
-            <div class="flex items-center gap-4">
-                <a href="https://github.com/SpiderMath" target="_blank" aria-label="GitHub" class="hover:text-brand transition-colors">
-                    <Icon name="github" size={20} class="w-7 h-7"/>
-                </a>
-            </div>
-        </div>
-    </div>
+			<div class="flex items-center gap-4">
+				<a href="https://github.com/SpiderMath" target="_blank" aria-label="GitHub" class="hover:text-brand transition-colors">
+					<Icon name="github" size={20} class="w-7 h-7"/>
+				</a>
+			</div>
+		</div>
+	</div>
 </footer>
 
 <script>
-    const quotes = [
-        { text: "If you can't solve a problem, then there is an easier problem you can solve: find it.", author: "George Polya" },
-        { text: "It is better to solve one problem five different ways, than to solve five problems one way.", author: "George Polya" },
-        { text: "Good problems and mushrooms of certain kinds have something in common; they grow in clusters.", author: "George Polya" },
-        { text: "The introduction of the digit 0 or the group concept was general nonsense too, and mathematics was more or less stagnating for thousands of years because nobody was around to take such childish steps...", author: "Alexander Grothendieck"},
-        { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
-        { text: "Here are three signs of senility. The first sign is that a man forgets his theorems. The second sign is that he forgets to zip up. The third sign is that he forgets to zip down.", author: "Paul Erdős" },
-    ];
+	const quotes = [
+		{ text: "If you can't solve a problem, then there is an easier problem you can solve: find it.", author: "George Polya" },
+		{ text: "It is better to solve one problem five different ways, than to solve five problems one way.", author: "George Polya" },
+		{ text: "Good problems and mushrooms of certain kinds have something in common; they grow in clusters.", author: "George Polya" },
+		{ text: "The introduction of the digit 0 or the group concept was general nonsense too, and mathematics was more or less stagnating for thousands of years because nobody was around to take such childish steps...", author: "Alexander Grothendieck"},
+		{ text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
+		{ text: "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.", author: "Brian Kernighan" },
+		{ text: "There are only two hard things in Computer Science: cache invalidation and naming things.", author: "Phil Karlton" },
+		{ text: "If we knew what it was we were doing, it would not be called research, would it?", author: "Albert Einstein" },
+		{ text: "The Pharaohs thought the afterlife would be just like the present, only more so. It must have been a depressing prospect.", author: "Will Cuppy" },
+		{ text: "Here are three signs of senility. The first sign is that a man forgets his theorems. The second sign is that he forgets to zip up. The third sign is that he forgets to zip down.", author: "Paul Erdős" },
+		{ text: "If debugging is the process of removing software bugs, then programming must be the process of putting them in.", author: "E. W. Dijkstra" },
+		{ text: "I have always wished for my computer to be as easy to use as my telephone; my wish has come true because I can no longer figure out how to use my telephone.", author: "Bjarne Stroustrup" },
+	];
 
-    function updateQuote() {
-        const quoteElement = document.getElementById("footer-quote-text");
-        const authorElement = document.getElementById("footer-quote-author");
+	function updateQuote() {
+		const quoteElement = document.getElementById("footer-quote-text");
+		const authorElement = document.getElementById("footer-quote-author");
 
-        if (quoteElement && authorElement) {
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+		if (quoteElement && authorElement) {
+			const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-            quoteElement.textContent = randomQuote.text;
-            authorElement.textContent = `- ${randomQuote.author}`;
+			quoteElement.textContent = randomQuote.text;
+			authorElement.textContent = `- ${randomQuote.author}`;
 
-            // Reveal the author smoothly
-            authorElement.classList.remove("opacity-0");
-        }
-    }
+			// Reveal the author smoothly
+			authorElement.classList.remove("opacity-0");
+		}
+	}
 
-    // Run on initial load
-    updateQuote();
+	// Run on initial load
+	updateQuote();
 
   // Run on view transitions (if you use them)
-    document.addEventListener('astro:page-load', updateQuote);
+	document.addEventListener('astro:page-load', updateQuote);
 </script>
