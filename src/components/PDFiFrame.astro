@@ -1,7 +1,7 @@
 ---
 interface Props {
-    file: string;
-    title?: string;
+	file: string;
+	title?: string;
 }
 
 const { file, title = "PDF Document" } = Astro.props;
@@ -9,11 +9,11 @@ const filePath = `/pdfs/${file}`;
 ---
 
 <div class="w-full aspect-3/4 md:aspect-4/3 border border-text-muted/50 rounded-lg overflow-hidden my-6 bg-bg-surface relative group">
-    <iframe
-        src={filePath} 
-        class="w-full h-full border-0" 
-        title={title}
-        loading="lazy"
-    >
-    </iframe>
+	<iframe
+		src={filePath} 
+		class="w-full h-full border-0" 
+		title={title}
+		loading="lazy"
+	>
+	</iframe>
 </div>

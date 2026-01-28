@@ -8,24 +8,24 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [mdx()],
+	integrations: [mdx()],
 
-    markdown: {
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [
-            [rehypeKatex, {
-                // we can define custom LaTeX macros here
-            }]
-        ],
-        shikiConfig: {
-            theme: "gruvbox-dark-hard",
-            wrap: true,
-        }
-    },
+	markdown: {
+		remarkPlugins: [remarkMath],
+		rehypePlugins: [
+			[rehypeKatex, {
+				// we can define custom LaTeX macros here
+			}]
+		],
+		shikiConfig: {
+			theme: "gruvbox-dark-hard",
+			wrap: true,
+		}
+	},
 
-    site: "https://spidermath.github.io",
+	site: "https://spidermath.github.io",
 
-    vite: {
-        plugins: [tailwindcss()]
-    }
+	vite: {
+		plugins: [tailwindcss()]
+	}
 });
