@@ -44,8 +44,8 @@ console.log(talks);
 			<tbody>
 				{talks.map((talk) => (
 					<tr>
-						{/* Date contents */}
-						<td class="whitespace-nowrap font-mono text-sm text-text-muted">
+						<td class="whitespace-nowrap font-mono text-sm text-text-muted" align="center">
+							{/* Date contents */}
 							{new Date(talk.frontmatter.date)
 								.toLocaleString("en-US", {
 									year: "numeric",
@@ -54,6 +54,7 @@ console.log(talks);
 							})}
 
 							<br/>
+							{/* Badge for Format */}
 							<span class={
 								`inline-flex items-center px-1.5 rounded text-xs font-mono border ${
 								talk.frontmatter.format === "online"
@@ -65,11 +66,14 @@ console.log(talks);
 
 						</td>
 
-						<td class="font-medium text-text-main">
-							{talk.frontmatter.title}
+						<td align="center">
+							{/* Talk title */}
+							<a href={talk.url} class="font-medium text-text-main">
+								{talk.frontmatter.title}
+							</a>
 						</td>
 
-						<td>
+						<td align="center">
 							<span class="text-sm text-text-main">
 								{talk.frontmatter.event}
 								<span class="italic block text-text-muted">
