@@ -1,5 +1,28 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const talkImports = import.meta.glob("./*.mdx", {
+	eager: true,
+});
+
+const talks = Object.entries(talkImports)
+	.map(([path, module]) => {
+		return {
+			url: `./${path
+				.split("/")
+				.pop()
+				.replace(".mdx", "")}`,
+			frontmatter: (module as any).frontmatter,
+		}
+	})
+	.sort((a, b) => {
+		const dateA = new Date(a.frontmatter.date).valueOf();
+		const dateB = new Date(b.frontmatter.date).valueOf()
+
+		return dateB - dateA;
+	});
+
+console.log(talks);
 ---
 
 <BaseLayout
@@ -7,5 +30,65 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
 	image="/images/face.jpg"
 	description="The directory of talks and presentations given by yours truly.">
 
+	<div class="overflow-x-auto">
+		<table class="">
+			<thead>
+				<tr>
+					<th class="w-32">Date</th>
+					<th>Title</th>
+					<th>Context</th>
+					<th class="w-40">Resources</th>
+				</tr>
+			</thead>
 
+			<tbody>
+				{talks.map((talk) => (
+					<tr>
+						{/* Date contents */}
+						<td class="whitespace-nowrap font-mono text-sm text-text-muted">
+							{new Date(talk.frontmatter.date)
+								.toLocaleString("en-US", {
+									year: "numeric",
+									month: "short",
+									day: "numeric"
+							})}
+
+							<br/>
+							<span class={
+								`inline-flex items-center px-1.5 rounded text-xs font-mono border ${
+								talk.frontmatter.format === "online"
+									? "border-brand text-brand"
+									: "border-brand-dark text-brand-dark"}`
+							}>
+								{talk.frontmatter.format}
+							</span>
+
+						</td>
+
+						<td class="font-medium text-text-main">
+							{talk.frontmatter.title}
+						</td>
+
+						<td>
+							<span class="text-sm text-text-main">
+								{talk.frontmatter.event}
+								<span class="italic block text-text-muted">
+									{talk.frontmatter.organiser}
+								</span>
+							</span>
+						</td>
+
+						<td align="center">
+							{ talk.frontmatter.youtube ? 
+								<a href={talk.frontmatter.youtube}>[youtube.]</a> 
+								: ""}
+							{ talk.frontmatter.slides ?
+								<a href={`/pdfs${talk.frontmatter.slides}`}>[slides.]</a>
+								: ""}
+						</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
+	</div>
 </BaseLayout>
