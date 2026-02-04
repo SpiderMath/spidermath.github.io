@@ -2,3 +2,6 @@
 # Full syntax: https://developers.google.com/search/docs/advanced/robots/create-robots-txt
 User-agent: *
 Allow: /
+
+# For proper indexing
+Sitemap: https://spidermath.github.io/sitemap-index.xml
