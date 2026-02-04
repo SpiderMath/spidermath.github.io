@@ -61,9 +61,10 @@ const socialData = [
 			<Image
 				loading="eager"
 				src="/images/face.jpg"
-				alt="Profile"
+				alt="Profile Picture"
 				height=80
 				width=80
+				fetchpriority="high"
 				class="h-80 w-80 rounded-full border-4 border-brand object-cover shadow-xl"
 			/>
 		</div>
@@ -80,9 +81,9 @@ const socialData = [
 		<div class="flex flex-wrap justify-center gap-4">
 			{socialData.map((social) => (
 				<SocialButton 
-				link={social.link} 
-				icon={social.icon} 
-				label={social.label} 
+					link={social.link} 
+					icon={social.icon} 
+					label={social.label} 
 				/>
 			))}
 		</div>
