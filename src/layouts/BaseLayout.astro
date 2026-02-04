@@ -5,22 +5,64 @@ import { ClientRouter, slide } from 'astro:transitions';
 import "katex/dist/katex.min.css";
 import "@fontsource/fira-code";
 
-const brandName = "TheDefectiveDetective";
-// loading our Astro properties
-const { pageTitle, frontmatter, description, image, backgroundImage } = Astro.props;
-const metaDescription = description || frontmatter?.description;
-const displayImage = image || frontmatter?.image;
-const displayTitle = pageTitle || frontmatter?.title;
-const bgImage = backgroundImage || frontmatter?.backgroundImage;
+/**
+ * If working with frontmatter, then same rules as following for frontmatter.*
+ * - `title`, `description` are *required*
+ * - `image` is for the embed
+ * - `backgroundImage` is for the actual pages' background
+ * - `pubDate` is the date of publication (mainly for listings)
+ * - `lastModified` is in the case if there's any edit on the page, when it was lastModified
+ * - `tags` is the list of... well... tags?
+ */
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	backgroundImage?: string;
+	pubDate?: Date | string;
+	lastModified?: Date | string;
+	tags?: string[];
+	frontmatter?: {
+		title?: string;
+		description?: string;
+		image?: string;
+		backgroundImage?: string;
+		pubDate?: Date | string;
+		lastModified?: Date | string;
+		tags?: string[];
+	}
+}
 
-// Validating our availability of a title, description and display image
+const brandName = "TheDefectiveDetective";
+const DEFAULT_IMAGE = "/images/face.jpg";
+
+// loading our Astro properties
+const {
+	title,
+	description,
+	image,
+	backgroundImage,
+	tags,
+	pubDate,
+	lastModified,
+	frontmatter
+} = Astro.props;
+
+const metaDescription = description || frontmatter?.description;
+const displayImage = image || frontmatter?.image || DEFAULT_IMAGE;
+const displayTitle = title || frontmatter?.title;
+const bgImage = backgroundImage || frontmatter?.backgroundImage;
+const publishedTime = pubDate || frontmatter?.pubDate;
+const modifiedTime = lastModified || frontmatter?.lastModified;
+const articleTags = tags || frontmatter?.tags;
+
+// Validating our availability of a title, description
 if (!displayTitle) throw new Error(`❌ MISSING TITLE: The page "${Astro.url.pathname}" has no title!`);
 if (!metaDescription) throw new Error(`❌ MISSING DESCRIPTION: The page "${Astro.url.pathname}" has no description!`);
-if (!displayImage) throw new Error(`❌ MISSING IMAGE: The page "${Astro.url.pathname}" has no image!`);
 
 // SEO BS
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(displayImage, Astro.site);
+const socialImageURL = new URL(displayImage, Astro.site || Astro.url.origin).href;
 
 // Acrylic Background Images
 const bodyStyle = bgImage ? `background-image: url('${bgImage}')` : "";
@@ -59,8 +101,29 @@ const mainClass = bgImage ? "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuc
 		<meta property="twitter:description" content={metaDescription} />
 		<meta property="twitter:image" content={socialImageURL} />
 
+		<meta property="og:site_name" content={brandName} />
+		<!-- <link rel="alternate" type="application/rss+xml" title={brandName} href={new URL("/blog/rss.xml", Astro.site)} -->
+		{publishedTime && <meta property="article:published_time" content={new Date(publishedTime).toISOString()} />}
+        {modifiedTime && <meta property="article:modified_time" content={new Date(modifiedTime).toISOString()} />}
+        {articleTags && articleTags.map((tag) => <meta property="article:tag" content={tag} />)}
+
 		<script src="../scripts/copyCode.js"></script>
 		<ClientRouter />
+
+		<script is:inline type="application/ld+json" set:html={
+			JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": publishedTime ? "BlogPosting" : "WebSite",
+				"headline": displayTitle,
+				"image": socialImageURL,
+				"author": {
+					"@type": "Person",
+					"name": brandName,
+					"url": new URL("/", Astro.site),
+				},
+				"datePublished": publishedTime ? new Date(publishedTime).toISOString() : undefined,
+				"description": metaDescription
+			})} />
 	</head>
 	<body style={bodyStyle} class={bodyClass}>
 		<Navbar brandName={brandName} />
