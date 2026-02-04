@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Card from "../../components/Card.astro";
+
+const posts = (await getCollection("blogs"))
+    .sort((a, b) => {
+        return (
+            b.data.pubDate?.valueOf() || 0
+        ) - (
+            a.data.pubDate?.valueOf() || 0
+        );
+    })
+---
+
+<BaseLayout title="blog." description="A personal notepad of thoughts and expression">
+    <h1>All Posts</h1>
+
+    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+            posts.map((post) => (
+                <Card
+                    title={post.data.title}
+                    href={`/blog/${post.id}`}
+                    date={post.data.pubDate}
+                    description={post.data.description}
+                    backgroundImage={post.data.backgroundImage}
+                />
+            ))
+        }
+    </div>
+</BaseLayout>
