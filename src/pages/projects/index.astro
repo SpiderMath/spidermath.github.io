@@ -1,10 +1,61 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getCollection } from "astro:content";
+import Card from "../../components/Card.astro";
+
+const projects = await getCollection("projects");
+
+const academicProjects = projects.filter((proj) => proj.data.projectType === "academic");
+const udgrps = projects.filter((proj) => proj.data.projectType === "udgrp");
+const personalProjects = projects.filter((proj) => proj.data.projectType === "personal");
 ---
 
 <BaseLayout
-	title="Projects"
+	title="projects."
 	description="The directory of projects done by myself in the last while I guess?">
 
+	<h2>Academic Projects</h2>
 
+	<div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+            academicProjects.map((post) => (
+                <Card
+                    title={post.data.title}
+                    href={`/projects/${post.id}`}
+                    description={post.data.description}
+                    backgroundImage={post.data.backgroundImage}
+                />
+            ))
+        }
+    </div>
+
+    <h2>Undergraduate Directed Reading Projects (UDGRPs)</h2>
+    <p> Just something done by ISI Bengaluru </p>
+    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+            udgrps.map((post) => (
+                <Card
+                    title={post.data.title}
+                    href={`/projects/${post.id}`}
+                    description={post.data.description}
+                    backgroundImage={post.data.backgroundImage}
+                />
+            ))
+        }
+    </div>
+
+    <h2>Personal Projects</h2>
+
+    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+            personalProjects.map((post) => (
+                <Card
+                    title={post.data.title}
+                    href={`/projects/${post.id}`}
+                    description={post.data.description}
+                    backgroundImage={post.data.backgroundImage}
+                />
+            ))
+        }
+    </div>
 </BaseLayout>
