@@ -36,7 +36,10 @@ const projectCollection = defineCollection({
             "personal",
             "udgrp",
         ]),
-        // add something about start and end dates!
+        // TODO: add something about start and end dates!
+
+        /* Flavour text or something they call this, for the initial display */
+        cardTitle: z.string(),
     })
 })
 

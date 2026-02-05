@@ -4,31 +4,31 @@
 /* This entire block is for themeing the site */
 
 @theme {
-	/* Background: Hard Dark (Deep Chocolate/Black) */
-	--color-bg-main: #1d2021;
+    /* Background: Nord 0 (The Deepest Cold) */
+    --color-bg-main: #2e3440;
 
-	/* Surface: Material Dark */
-	--color-bg-surface: #32302f;
+    /* Surface: Nord 1 (Polar Night Layer) */
+    --color-bg-surface: #3b4252;
 
-	/* Muted: Darker */
-	--color-bg-muted: #141617;
+    /* Muted: Nord 3 (Contrast Shadow) */
+    --color-bg-muted: #434c5e;
 
-	/* Brand: Forest Green */
-	--color-brand: #a9b665;
+    /* Brand: Nord 8 (Frost Ice) */
+    --color-brand: #88c0d0;
 
-	/* Brand Light: Aqua */
-	--color-brand-light: #89b482;
+    /* Brand Light: Nord 9 (Arctic Water) */
+    --color-brand-light: #81a1c1;
 
-	/* Brand Dark: Burnt Orange/Red */
-	--color-brand-dark: #ea6962;
+    /* Brand Dark: Nord 7 (Aurora Cyan) */
+    --color-brand-dark: #8fbcbb;
 
-	/* Text: Milk White */
-	--color-text-main: #d4be98;
+    /* Text: Nord 6 (Pure Snow Storm) */
+    --color-text-main: #eceff4;
 
-	/* Text Muted: Grey-Brown */
-	--color-text-muted: #7c6f64;
+    /* Text Muted: Nord 4 (Glacial Gray) */
+    --color-text-muted: #d8dee9;
 
-	--font-mono: "Fira Code";
+    --font-mono: "Fira Code";
 }
 
 /* I am working with a custom theme, this just sets the background to the theme background*/

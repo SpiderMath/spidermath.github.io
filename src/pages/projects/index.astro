@@ -20,7 +20,7 @@ const personalProjects = projects.filter((proj) => proj.data.projectType === "pe
         {
             academicProjects.map((post) => (
                 <Card
-                    title={post.data.title}
+                    title={post.data.cardTitle}
                     href={`/projects/${post.id}`}
                     description={post.data.description}
                     backgroundImage={post.data.backgroundImage}
@@ -35,7 +35,7 @@ const personalProjects = projects.filter((proj) => proj.data.projectType === "pe
         {
             udgrps.map((post) => (
                 <Card
-                    title={post.data.title}
+                    title={post.data.cardTitle}
                     href={`/projects/${post.id}`}
                     description={post.data.description}
                     backgroundImage={post.data.backgroundImage}
@@ -50,7 +50,7 @@ const personalProjects = projects.filter((proj) => proj.data.projectType === "pe
         {
             personalProjects.map((post) => (
                 <Card
-                    title={post.data.title}
+                    title={post.data.cardTitle}
                     href={`/projects/${post.id}`}
                     description={post.data.description}
                     backgroundImage={post.data.backgroundImage}
