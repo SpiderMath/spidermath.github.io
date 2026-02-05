@@ -4,9 +4,12 @@ const { brandName } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 
-// Simple helper to check if a link is active. 
-// Using a strict check to ensure no random issues (home should only have "/" for example)
-const isActive = (path) => currentPath === path;
+/*
+	Simple helper to check if a link is active. 
+	Using a strict check to ensure no random issues (home should only have "" or "/" for example)
+	and about me should only have "/about" or "/about/"
+*/
+const isActive = (path) => currentPath === path || currentPath === `${path}/`;
 
 const navLinks = [
 	{ name: "home.", href: "/" },
@@ -98,13 +101,3 @@ const mobInactive = "border-transparent text-text-muted hover:bg-text-main/10 ho
 		document.addEventListener('astro:after-swap', setup);
 	</script>
 </nav>
-
-<!-- <nav class="navbar">
-		<a href="/" class="logo">{brandName}</a>
-
-		<ul class="nav-links">
-				<li><a href="/home">Home</a></li>
-				<li><a href="/talks">Talks</a></li>
-				<li><a href="/about">About Me</a></li>
-		</ul>
-</nav> -->
