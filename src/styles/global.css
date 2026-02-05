@@ -4,29 +4,29 @@
 /* This entire block is for themeing the site */
 
 @theme {
-    /* Background: Nord 0 (The Deepest Cold) */
-    --color-bg-main: #2e3440;
+    /* Background: Deep Slate Charcoal */
+    --color-bg-main: #1a1c1e;
 
-    /* Surface: Nord 1 (Polar Night Layer) */
-    --color-bg-surface: #3b4252;
+    /* Surface: Dusty Slate */
+    --color-bg-surface: #26292c;
 
-    /* Muted: Nord 3 (Contrast Shadow) */
-    --color-bg-muted: #434c5e;
+    /* Muted: The Deep "Erase" Shadow */
+    --color-bg-muted: #121415;
 
-    /* Brand: Nord 8 (Frost Ice) */
-    --color-brand: #88c0d0;
+    /* Brand: Chalky Crimson (Pastel Red / Nord 11) */
+    --color-brand: #bf616a;
 
-    /* Brand Light: Nord 9 (Arctic Water) */
-    --color-brand-light: #81a1c1;
+    /* Brand Light: Chalky Peach (Nord 12) */
+    --color-brand-light: #d08770;
 
-    /* Brand Dark: Nord 7 (Aurora Cyan) */
-    --color-brand-dark: #8fbcbb;
+    /* Brand Dark: Dusty Lavender (Nord 15) */
+    --color-brand-dark: #b48ead;
 
-    /* Text: Nord 6 (Pure Snow Storm) */
-    --color-text-main: #eceff4;
+    /* Text: Fresh Chalk White (Maximum Legibility) */
+    --color-text-main: #e5e9f0;
 
-    /* Text Muted: Nord 4 (Glacial Gray) */
-    --color-text-muted: #d8dee9;
+    /* Text Muted: Chalk Dust Grey */
+    --color-text-muted: #717d8c;
 
     --font-mono: "Fira Code";
 }
