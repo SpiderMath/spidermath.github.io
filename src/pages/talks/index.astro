@@ -42,7 +42,7 @@ const talks = Object.entries(talkImports)
 			<tbody>
 				{talks.map((talk) => (
 					<tr>
-						<td class="whitespace-nowrap font-mono text-sm text-text-muted" align="center">
+						<td class="whitespace-nowrap font-mono text-base text-text-muted" align="center">
 							{/* Date contents */}
 							{new Date(talk.frontmatter.date)
 								.toLocaleString("en-US", {
@@ -72,7 +72,7 @@ const talks = Object.entries(talkImports)
 						</td>
 
 						<td align="center">
-							<span class="text-sm text-text-main">
+							<span class="text-base text-text-main">
 								{talk.frontmatter.event}
 								<span class="italic block text-text-muted">
 									{talk.frontmatter.organiser}

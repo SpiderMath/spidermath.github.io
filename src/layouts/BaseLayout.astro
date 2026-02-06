@@ -35,6 +35,7 @@ interface Props {
 
 const brandName = "TheDefectiveDetective";
 const DEFAULT_IMAGE = "/images/face.jpg";
+const DEFAULT_BG_IMAGE = "/images/background.jpg";
 
 // loading our Astro properties
 const {
@@ -51,7 +52,7 @@ const {
 const metaDescription = description || frontmatter?.description;
 const displayImage = image || frontmatter?.image || DEFAULT_IMAGE;
 const displayTitle = title || frontmatter?.title;
-const bgImage = backgroundImage || frontmatter?.backgroundImage;
+const bgImage = backgroundImage || frontmatter?.backgroundImage || DEFAULT_BG_IMAGE;
 const publishedTime = pubDate || frontmatter?.pubDate;
 const modifiedTime = lastModified || frontmatter?.lastModified;
 const articleTags = tags || frontmatter?.tags;
@@ -66,9 +67,11 @@ const socialImageURL = new URL(displayImage, Astro.site || Astro.url.origin).hre
 
 // Acrylic Background Images
 const bodyStyle = bgImage ? `background-image: url('${bgImage}')` : "";
-const bodyClass = bgImage ? `bg-cover bg-center bg-fixed min-h-screen text-text-main` : "bg-bg-main min-h-screen text-text-main";
+const bodyClass = bgImage ? "flex flex-col bg-cover bg-center bg-fixed min-h-screen text-text-main" : "flex flex-col bg-bg-main min-h-screen text-text-main";
 
-const mainClass = bgImage ? "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin bg-bg-main/85 backdrop-blur-md rounded-xl shadow-2xl border border-text-muted/20 my-10" : "max-w-5xl sm:px-12 mx-auto px-6 py-10 prose-catppuccin"
+const mainClass = bgImage
+	? "flex-grow max-w-6xl prose-lg sm:px-12 mx-auto px-6 py-10 prose-catppuccin bg-bg-main/85 backdrop-blur-md rounded-xl shadow-2xl border border-text-muted/20 my-10"
+		: "flex-grow max-w-6xl prose-lg sm:px-12 mx-auto px-6 py-10 prose-catppuccin"
 ---
 
 <html lang="en">

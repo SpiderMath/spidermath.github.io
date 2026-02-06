@@ -1,0 +1,141 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter, headings } = Astro.props;
+
+const filteredHeadings = headings
+	.filter((h) => h.depth > 1 && h.depth <= 3);
+
+const showHeadings = filteredHeadings.length > 0;
+---
+
+<BaseLayout {...frontmatter} headings={headings}>
+	<div class="flex flex-col lg:flex-row justify-center gap-12">
+	
+	<article class="w-full">
+		<slot />
+	</article>
+
+	{showHeadings && (
+		<>
+			<!-- Button to hide or show the sidebar. Default: [close.] -->
+			<div
+				class="hidden lg:sticky fixed right-8 top-24 z-50 lg:top-15 lg:h-fit lg:mb-4"
+			>
+			<!-- I would've used
+				class="fixed right-8 top-24 z-50 lg:sticky lg:top-15 lg:h-fit lg:mb-4"
+				I cannot use this because mobile ui🙄
+				I hate mobile users -->
+
+				<button
+					id="toc-toggle"
+					class="mb-4 text-base tracking-widest text-brand hover:text-brand-light transition-colors cursor-pointer"
+				>
+					[close.]
+				</button>
+			</div>
+
+			<!-- Let's load the sidebar! -->
+			<aside
+				id="headings-toc"
+				class="hidden lg:block w-64 shrink-0 transition-all duration-300 ease-in-out border-l border-text-muted/20 pl-8"
+			>
+				<div class="sticky top-20">
+					<h2 class="text-brand font-bold uppercase tracking-widest text-base mb-4">
+						On this page
+					</h2>
+
+					<nav>
+						<ul class="space-y-3 text-base list-none">
+							{filteredHeadings.map((h) => (
+								<li
+									class={`transition-all duration-300 ${h.depth === 3
+											? "ml-2 border-l border-text-muted/40 pl-4" // so subheadings are indented
+											: "border-l border-text-muted/40 pl-4 transition-all duration-300"}`}
+								>
+									<a
+										href={`#${h.slug}`}
+										class="hover-pulse inline-block no-underline text-text-muted hover:text-brand-light transition-colors duration-200"
+									>
+										{h.text}
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				</div>
+			</aside>
+
+			<script>
+				document.addEventListener("astro:page-load", () => {
+					// Logic for HIDING THE SIDEBAR
+					const btn = document.getElementById("toc-toggle");
+					const sidebar = document.getElementById("headings-toc");
+
+					btn?.addEventListener("click", () => {
+						// set the width to zero basically to hide the sidebar
+						sidebar?.classList.toggle('lg:w-0');
+						sidebar?.classList.toggle('lg:opacity-0');
+						sidebar?.classList.toggle('lg:overflow-hidden');
+
+						// sidebar closed or not good indicator
+						if(sidebar?.classList.contains("lg:w-0"))
+							btn.textContent = "[open.]";
+						else
+							btn.textContent = "[close.]";
+					})
+
+					// Logic for ACTIVE SUBHEADING
+					const headings = Array.from(document.querySelectorAll('article h2, article h3'));
+					const navLinks = document.querySelectorAll('#headings-toc a');
+
+					const observer = new IntersectionObserver((entries) => {
+						entries.forEach((entry) => {
+							if(entry.isIntersecting)
+								updateActiveLink(entry.target.id);
+						});
+					}, {
+						rootMargin: "0px 0px -50% 0px",
+						threshold: 0,
+					});
+
+					headings.forEach((heading) => observer.observe(heading));
+
+					function updateActiveLink(id) {
+						navLinks.forEach((link) => { 
+							const isActive = link.getAttribute("href") === `#${id}`;
+							// to highlight the text
+							link.classList.toggle("active-link", isActive)
+							// to highlight the border
+							const parentLi = link.parentElement;
+
+							if(parentLi) {
+								if(isActive) {
+									parentLi.style.borderColor = "var(--color-brand)";
+									parentLi.style.borderLeftWidth = "2px";
+								}
+								else {
+									parentLi.style.borderColor = "";
+									parentLi.style.borderLeftWidth = "";
+								}
+							}
+						});
+					}
+
+					window.addEventListener("scroll", () => {
+						const current = headings.reduce((prev, curr) => {
+							if(curr.getBoundingClientRect().top < 200)
+								return curr;
+							else
+								return prev;
+						}, headings[0]);
+
+						if(current)
+							updateActiveLink(current.id);
+					});
+				})
+			</script>
+		</>
+	)}
+
+	</div>
+</BaseLayout>

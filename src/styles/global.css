@@ -34,6 +34,7 @@
 /* I am working with a custom theme, this just sets the background to the theme background*/
 body {
 	background-color: var(--color-bg-main);
+	font-size: var(--text-base);
 }
 
 @utility prose-catppuccin {
@@ -58,7 +59,7 @@ body {
 	}
 
 	/* CODE BLOCKS:- We style the <pre> container, not the code text inside */
-	@apply prose-pre:bg-bg-surface prose-pre:border prose-pre:border-text-muted prose-pre:text-sm;
+	@apply prose-pre:bg-bg-surface prose-pre:border prose-pre:border-text-muted prose-pre:text-base;
 	
 	/* Ensure the copy button fits nicely */
 	@apply prose-pre:relative;
@@ -115,4 +116,38 @@ code, pre {
 	and may cause it to kinda look like jittering, i.e. "looks" like the content moves a bit when we open the details thingy */
 html {
 	scrollbar-gutter: stable;
+	scroll-behavior: smooth; /* added for markdown stuff, because well, when we click a different section, they shouldn't jump y'know */
+}
+
+/* Some sexy stuff for markdown sidebar */
+/* So basically, we define pulse-glow because, well..., it looks cool when stuff flashes slowwwwly <3, only used for active-link on sidebar
+	Apart from that, we define its behaviour on hover because obviously
+	And lastly, we need some of that beauty when we work with active-link */
+@keyframes pulse-glow {
+	0%, 100% { 
+		text-shadow: 0 0 4px rgba(208, 135, 112, 0); 
+	}
+	50% { 
+		text-shadow: 0 0 12px rgba(208, 135, 112, 0.6); 
+		color: var(--color-brand-light);
+	}
+}
+
+.hover-pulse:hover {
+	animation: pulse-glow 2s infinite ease-in-out;
+	transform: translateX(4px);
+	transition: all 0.3s ease;
+
+	/* Force the background to stay clear and text to stay peach */
+	background-color: transparent !important;
+	color: var(--color-brand-light) !important;
+	text-decoration: none !important;
+}
+
+.active-link {
+    animation: pulse-glow 2s infinite ease-in-out;
+    color: var(--color-brand-light) !important;
+	font-weight: bold;
+    transform: translateX(6px); /* Stay slightly shifted while active */
+    transition: all 0.3s ease;
 }

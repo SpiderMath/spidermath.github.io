@@ -22,7 +22,7 @@ export default defineConfig({
             }]
         ],
         shikiConfig: {
-            theme: "gruvbox-dark-hard",
+            theme: "ayu-dark",
             wrap: true,
         }
     },

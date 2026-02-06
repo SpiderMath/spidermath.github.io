@@ -4,17 +4,17 @@ import Icon from "./Icon.astro";
 const today = new Date();
 ---
 
-<footer class="w-full border-t border-text-muted/20 bg-bg-muted/80 mt-12 backdrop-blur-md">
+<footer class="w-full border-t border-text-muted/20 bg-bg-muted/80 backdrop-blur-md">
 	<div class="max-w-4xl mx-auto px-4 py-8">
 		<div class="flex flex-col items-center text-center mb-8">
-			<blockquote class="font-mono text-sm text-text-muted italic max-w-lg">
+			<blockquote class="font-mono text-base text-text-muted italic max-w-lg">
 				"<span id="footer-quote-text">Loading wisdom...</span>"
 			</blockquote>
 			<cite id="footer-quote-author" class="text-xs text-brand mt-2 font-bold uppercase tracking-wider opacity-0 transition-opacity duration-500">
 			</cite>
 		</div>
 
-		<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
+		<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-base text-text-muted">
 			<div>
 				&copy; {today.getFullYear()} Shankha Suvra Dam. All rights reserved.
 			</div>
