@@ -37,6 +37,7 @@
 body {
 	background-color: var(--color-bg-main);
 	font-size: var(--text-base);
+	font-display: swap;
 }
 
 @utility prose-catppuccin {
