@@ -110,7 +110,7 @@ const mainClass = bgImage
 		<meta property="twitter:image" content={socialImageURL} />
 
 		<meta property="og:site_name" content={brandName} />
-		<!-- <link rel="alternate" type="application/rss+xml" title={brandName} href={new URL("/blog/rss.xml", Astro.site)} -->
+		<link rel="alternate" type="application/rss+xml" title={brandName} href={new URL("/blog/rss.xml", Astro.site)} />
 		{publishedTime && <meta property="article:published_time" content={new Date(publishedTime).toISOString()} />}
         {modifiedTime && <meta property="article:modified_time" content={new Date(modifiedTime).toISOString()} />}
         {articleTags && articleTags.map((tag) => <meta property="article:tag" content={tag} />)}
@@ -149,7 +149,7 @@ const mainClass = bgImage
 
 	<body style={bodyStyle} class={bodyClass}>
 		<Navbar brandName={brandName} />
-		<main class={mainClass} transition:animate={slide({ duration: "0.8s" })}>
+		<main class={mainClass} transition:animate={slide({ duration: "0.55s" })}>
 			<slot />
 		</main>
 

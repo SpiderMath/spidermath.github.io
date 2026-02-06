@@ -71,6 +71,9 @@ const showHeadings = filteredHeadings.length > 0;
 					const btn = document.getElementById("toc-toggle");
 					const sidebar = document.getElementById("headings-toc");
 
+					if (!sidebar || window.getComputedStyle(sidebar).display === 'none')
+						return;
+
 					btn?.addEventListener("click", () => {
 						// set the width to zero basically to hide the sidebar
 						sidebar?.classList.toggle('lg:w-0');
