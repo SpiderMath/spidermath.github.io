@@ -69,7 +69,7 @@ const socialImageURL = new URL(displayImage, Astro.site || Astro.url.origin).hre
 const bodyStyle = bgImage ? `background-image: url('${bgImage}')` : "";
 
 const bodyClass = bgImage
-	? "flex flex-col bg-cover bg-center bg-scroll bg-fixed min-h-screen text-text-main overflow-x-hidden"
+	? "flex flex-col bg-cover bg-center bg-scroll md:bg-fixed min-h-screen text-text-main overflow-x-hidden"
 		: "flex flex-col bg-bg-main min-h-screen text-text-main overflow-x-hidden";
 
 const mainClass = bgImage
