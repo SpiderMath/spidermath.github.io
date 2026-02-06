@@ -16,10 +16,16 @@ const today = new Date();
 
 		<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-base text-text-muted">
 			<div>
-				&copy; {today.getFullYear()} Shankha Suvra Dam. All rights reserved.
+				<a href="https://www.deviantart.com/rmradev/"
+					class="text-text-muted hover:text-brand hover-pulse transition-colors duration-300 no-underline font-mono tracking-widest"
+				>
+					Background: <strong>RmRadev (DeviantArt)</strong>
+				</a>
+				<br/>
+				Built with 🍵, Astro and Tailwind
 			</div>
 
-			<div class="flex items-center gap-4">
+			<div class="flex items-center gap-6">
 				<a href="https://github.com/SpiderMath/spidermath.github.io/" target="_blank" aria-label="GitHub" class="hover:text-brand transition-colors">
 					<Icon name="github" size={20} class="w-7 h-7"/>
 				</a>
