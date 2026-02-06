@@ -50,10 +50,10 @@ const headerClass = "flex items-center gap-2 font-bold font-mono text-base selec
 
 {collapsible ? (
 	<details open={!collapsed} class=`${containerClass} group`>
-		<summary class=`${headerClass} cursor-pointer list-none flex items-center justify-between [&::-webkit-details-marker]:hidden`>
+		<summary class={`${headerClass} cursor-pointer list-none flex items-center justify-between [&::-webkit-details-marker]:hidden`}>
 			<div class="gap-2 flex items-center">
 				<div class="text-lg leading-none">
-					<Icon name={finalIconName} size={16} class="w-5 h-5" />
+					<Icon name={finalIconName} size={16} />
 				</div>
 				<span>
 					{finalTitle}
@@ -83,7 +83,7 @@ const headerClass = "flex items-center gap-2 font-bold font-mono text-base selec
 	<div class={containerClass}>
 		<div class={headerClass}>
 			<div class="text-lg leading-none">
-				<Icon name={finalIconName} size={16} class="w-5 h-5" />
+				<Icon name={finalIconName} size={16} />
 			</div>
 			<span>
 				{finalTitle}

@@ -1,0 +1,192 @@
+---
+import Icon from "./Icon.astro";
+
+const buttonListStyle = "w-full text-left text-[11px] py-1.5 px-2 rounded hover:bg-text-main/10 transition-colors flex justify-between items-center group font-mono cursor-pointer active:scale-95 border relative"
+---
+
+<div class="settings-container relative inline-block text-left">
+    <button
+        type="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label="Site Settings"
+        class="settings-btn text-text-muted hover:text-brand transition-colors p-2 focus:outline-none"
+    >
+        <div class="items-center justify-center flex">
+            <Icon size={22} name="settings" class="hover:rotate-90 transition-transform duration-500 ease-in-out" />
+        </div>
+    </button>
+
+    <div
+        class="settings-dropdown hidden absolute right-0 top-full mt-3 w-64 origin-top-right bg-bg-muted/95 backdrop-blur-xl border border-text-muted/20 shadow-2xl overflow-hidden rounded-xl z-50 transition-all duration-200"
+    >
+        <div class="py-2">
+            <div class="px-4 py-3 border-b border-text-muted/10">
+                <p class="text-base font-bold font-mono text-brand tracking-wide">[page animations.]</p>
+                <p class="text-xs text-text-muted leading-tight mt-1">
+                    To modify the animations that play when going from one page to another
+                </p>
+                <div class="space-y-1 mt-2">
+                    <button class={`anim-opt ${buttonListStyle}`} data-anim="none">
+                        <span class="text-[10px] font-mono">None</span>
+                        <span class="check-icon opacity-0 text-brand font-bold">✓</span>
+                    </button>
+                    <button class={`anim-opt ${buttonListStyle}`} data-anim="slide">
+                        <span class="text-[10px] font-mono">Slide</span>
+                        <span class="check-icon opacity-0 text-brand font-bold">✓</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-4 py-3">
+                <p class="text-base font-bold font-mono text-brand tracking-wide">[ambiance.]</p>
+                <p class="text-xs text-text-muted leading-tight mt-1">
+                    Set the mood with something nice!
+                </p>
+
+                <div class="space-y-1 mt-2">
+                    <button class={`weather-opt ${buttonListStyle}`} data-weather="none">
+                        <span class="group-hover:text-text-main">Clear Skies</span>
+                        <span class="check-icon opacity-0 text-brand font-bold">✓</span>
+                    </button>
+                    <button class={`weather-opt ${buttonListStyle}`} data-weather="snow">
+                        <span class="group-hover:text-text-main">Snowfall ❄️</span>
+                        <span class="check-icon opacity-0 text-brand font-bold">✓</span>
+                    </button>
+                    <button class={`weather-opt ${buttonListStyle}`} data-weather="rain">
+                        <span class="group-hover:text-text-main">Rainstorm 🌧️</span>
+                        <span class="check-icon opacity-0 text-brand font-bold">✓</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Define outside click handler globally to prevent duplicate listeners on swap
+    const handleOutsideClick = (event) => {
+        const isClickInside = event.target.closest('.settings-container');
+        if (!isClickInside) {
+            document.querySelectorAll('.settings-dropdown').forEach(m => {
+                if (!m.classList.contains('hidden')) {
+                    m.classList.add('hidden');
+                    // Reset aria-expanded when closing via outside click
+                    const btn = m.closest('.settings-container')?.querySelector('.settings-btn');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    };
+
+    const initSettings = () => {
+        const containers = document.querySelectorAll(".settings-container");
+
+        // Clean up old listener before adding new one (Astro hygiene)
+        document.removeEventListener("click", handleOutsideClick);
+        document.addEventListener("click", handleOutsideClick);
+
+        containers.forEach((container) => {
+            const btn = container.querySelector(".settings-btn");
+            const menu = container.querySelector(".settings-dropdown");
+
+            btn?.addEventListener("click", (event) => {
+                event.stopPropagation();
+                
+                /*
+                    This step is only for bakchodi, so say I am working on Mobile menu and testing
+                    stuff and then I keep the menu open and transition to desktop layout
+                    Then I gotta close the mobile menu right
+                */
+                document.querySelectorAll(".settings-dropdown").forEach((m) => {
+                    if(m !== menu) m.classList.add("hidden");
+                });
+
+                const isHidden = menu.classList.toggle("hidden");
+                btn.setAttribute("aria-expanded", (!isHidden).toString());
+            });
+		});
+
+		const setButtonState = (btn, isActive) => {
+			const check = btn.querySelector('.check-icon');
+			const text = btn.querySelector('span:first-child');
+
+			if (isActive) {
+				btn.classList.add('border-brand/30', 'bg-brand/5');
+				btn.classList.remove('border-transparent', 'hover:bg-text-main/5');
+				
+				if(check) {
+					check.classList.remove('opacity-0', 'scale-50');
+					check.classList.add('opacity-100', 'scale-100');
+				}
+				if(text) {
+					text.classList.add('text-brand');
+					text.classList.remove('text-text-muted', 'group-hover:text-text-main');
+				}
+			} else {
+				// Inactive: Transparent Border + Gray Text
+				btn.classList.remove('border-brand/30', 'bg-brand/5');
+				btn.classList.add('border-transparent', 'hover:bg-text-main/5');
+
+				if(check) {
+					check.classList.add('opacity-0', 'scale-50');
+					check.classList.remove('opacity-100', 'scale-100');
+				}
+				if(text) {
+					text.classList.remove('text-brand');
+					text.classList.add('text-text-muted', 'group-hover:text-text-main');
+				}
+			}
+		};
+
+        const updateUI = () => {
+            const currentAnim = ((localStorage.getItem('view-transitions') || 'enabled') === "enabled") ? "slide" : "none"; 
+            const currentWeather = localStorage.getItem('site-weather') || 'none';
+
+            // Update Animations UI
+            document.querySelectorAll('.anim-opt').forEach(btn =>
+				setButtonState(btn, btn.getAttribute('data-anim') === currentAnim)
+            );
+
+            // Update Weather UI
+            document.querySelectorAll('.weather-opt').forEach(btn =>
+				setButtonState(btn, btn.getAttribute('data-weather') === currentWeather)
+            );
+        };
+
+        const attachListeners = () => {
+            // Animations Logic
+            document.querySelectorAll('.anim-opt').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const type = btn.getAttribute('data-anim');                    
+                    localStorage.setItem('view-transitions', type === 'none' ? 'disabled' : 'enabled');
+                    updateUI();
+                });
+            });
+
+            // Weather Logic
+            document.querySelectorAll('.weather-opt').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const type = btn.getAttribute('data-weather');
+                    
+                    localStorage.setItem('site-weather', type);
+                    
+                    updateUI();
+                    
+                    // Dispatches event so your Rain/Snow component can react immediately
+                    window.dispatchEvent(new CustomEvent('weather-change', { detail: type }));
+                });
+            });
+        };
+
+        attachListeners();
+        updateUI();
+    }
+
+    // Initialize on load and on Astro page transitions
+    initSettings();
+
+    document.addEventListener("astro:after-swap", initSettings);
+</script>

@@ -33,7 +33,7 @@ interface Props {
 	}
 }
 
-const brandName = "TheDefectiveDetective";
+const brandName = "RishiMath";
 const DEFAULT_IMAGE = "/images/face.jpg";
 const DEFAULT_BG_IMAGE = "/images/background.jpg";
 
@@ -113,6 +113,19 @@ const mainClass = bgImage
 		<script src="../scripts/copyCode.js"></script>
 		<ClientRouter />
 
+		<script is:inline>
+			document.addEventListener('astro:before-preparation', (ev) => {
+				const pref = localStorage.getItem("view-transitions") === "disabled";
+
+				// So if the setting is set to none, only then is this triggered
+				if(pref) {
+					ev.preventDefault();
+					window.location.assign(ev.to.href);
+					return;
+				}
+			});
+		</script>
+
 		<script is:inline type="application/ld+json" set:html={
 			JSON.stringify({
 				"@context": "https://schema.org",
@@ -128,6 +141,7 @@ const mainClass = bgImage
 				"description": metaDescription
 			})} />
 	</head>
+
 	<body style={bodyStyle} class={bodyClass}>
 		<Navbar brandName={brandName} />
 		<main class={mainClass} transition:animate={slide({ duration: "0.8s" })}>

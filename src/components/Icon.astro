@@ -21,6 +21,8 @@ else
 	console.error(`Icon "${name}" not found in src/assets/images/socialIcons/`);
 ---
 
-<div class:list={["inline-flex [&>svg]:fill-current [&>svg]:w-full [&>svg]:h-full", className]} style={{ width: size, height: size }}>
+<div
+	class:list={["inline-flex [&>svg]:w-full [&>svg]:h-full", className]}
+	style={{ width: `${size}px`, height: `${size}px` }}>
 	<Fragment set:html={svgContent} />
 </div>
