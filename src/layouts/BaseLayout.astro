@@ -69,11 +69,11 @@ const socialImageURL = new URL(displayImage, Astro.site || Astro.url.origin).hre
 const bodyStyle = bgImage ? `background-image: url('${bgImage}')` : "";
 
 const bodyClass = bgImage
-	? "flex flex-col bg-cover bg-center bg-local bg-scroll md:bg-fixed min-h-screen text-text-main overflow-x-hidden"
+	? "flex flex-col bg-cover bg-center bg-scroll bg-fixed min-h-screen text-text-main overflow-x-hidden"
 		: "flex flex-col bg-bg-main min-h-screen text-text-main overflow-x-hidden";
 
 const mainClass = bgImage
-	? "flex-grow w-full max-w-6xl prose-lg sm:px-12 mx-auto px-6 py-10 prose-catppuccin bg-bg-main/85 backdrop-blur-md rounded-xl shadow-2xl border border-text-muted/20 my-10 isolation-auto transform-gpu backface-hidden"
+	? "flex-grow w-full max-w-6xl prose-lg sm:px-12 mx-auto px-6 py-10 prose-catppuccin bg-bg-main/85 md:backdrop-blur-md rounded-xl shadow-2xl border border-text-muted/20 my-10 isolation-auto transform-gpu backface-hidden"
 		: "flex-grow w-full max-w-6xl prose-lg prose-invert sm:px-12 mx-auto px-6 py-10 prose-catppuccin isolation-auto"
 ---
 
