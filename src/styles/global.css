@@ -29,6 +29,8 @@
     --color-text-muted: #717d8c;
 
     --font-mono: "Fira Code";
+
+	--font-victor: "Victor Mono", var(--font-mono);
 }
 
 /* I am working with a custom theme, this just sets the background to the theme background*/
