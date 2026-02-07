@@ -90,6 +90,9 @@ body {
 		text-align: center !important;
 	}
 
+	/* So basically; if I use bold or underline in my markdown, then it completely bungles up my links on hover, making them stay text-brand */
+	@apply prose-a:hover:prose-strong:text-bg-main;
+    @apply prose-a:hover:prose-em:text-bg-main;
 }
 
 .prose-catppuccin a:hover {
