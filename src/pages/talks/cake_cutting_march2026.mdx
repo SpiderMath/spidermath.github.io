@@ -1,28 +1,36 @@
 ---
 layout: ../../layouts/MarkdownLayout.astro
 
-title: "Cutting a Cake in n^n^n Steps"
+title: "Cutting a Cake in n^n^n^n^n^n Steps"
 venue: Second Floor Auditorium, Academic Building, ISI Bengaluru
 format: Offline
 date: 2026-03-14
 organiser: Math Club, ISI Bengaluru Centre
 event: Student Talks (Spring 2026)
-# youtube: https://youtube.com/watch?v=MsNHPiNaFCE
+youtube: https://www.youtube.com/watch?v=pwub8DLJqEU
 # slides: /talks/logicBehindVoting.pdf
 
 description: In my sixth and final semester, I gave a talk at Math Club, ISI Bengaluru Centre on Cake Cutting. I went over the various approaches to cutting a cake, and discussions about the notions of fairness
 ---
+import Callout from "../../components/Callout.astro";
+import YouTube from "../../components/YouTube.astro";
 
-# Cutting a Cake in n^n^n Steps
+# Cutting a Cake in n^n^n^n^n^n Steps
 
 ## Details
 - **Event:** Student Talks (Spring 2026)
 - **Organiser:** Math Club, ISI Bengaluru Centre
 - **Venue:** Second Floor Auditorium, Academic Building, ISI Bengaluru
 - **Date:** 14 March, 2026
+- **YouTube Link:** click [me!](https://www.youtube.com/watch?v=pwub8DLJqEU)
 
 ## Abstract
 How hard can it be to cut a cake fairly? If you've ever had to split a cake with various toppings, you know the struggle: everyone wants a different piece! How can you ensure the distribution is actually fair? And mathematically speaking, how do you even go about defining what "fair" looks like in this context? 
 
 That is exactly what we will discuss in this talk. We will start by defining the rigorous notions surrounding fairness, and then review the foundational body of work in this field. All of this will culminate in the monumental 2016 result by H. Aziz and S. Mackenzie, which finally provided an upper bound (admittedly, a completely ridiculous one) for the number of steps required to guarantee a fair division of a cake among n agents.
 
+## Materials
+
+<Callout type="danger" icon="youtube" title="YouTube Video" collapsible collapsed>
+	<YouTube id="pwub8DLJqEU" label="YouTube Video - Cutting a Cake in n^n^n^n^n^n Steps" />
+</Callout>
