@@ -24,6 +24,8 @@ const personalProjects = projects.filter((proj) => proj.data.projectType === "pe
                     href={`/projects/${post.id}`}
                     description={post.data.description}
                     backgroundImage={post.data.backgroundImage}
+                    tags={post.data.tags}
+                    upperBadge={post.data.timeline} 
                 />
             ))
         }
@@ -39,6 +41,8 @@ const personalProjects = projects.filter((proj) => proj.data.projectType === "pe
                     href={`/projects/${post.id}`}
                     description={post.data.description}
                     backgroundImage={post.data.backgroundImage}
+                    tags={post.data.tags}
+                    upperBadge={post.data.timeline} 
                 />
             ))
         }

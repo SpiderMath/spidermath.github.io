@@ -14,7 +14,7 @@ const blogCollection = defineCollection({
         image: z.string().optional(),
         backgroundImage: z.string().optional(),
         tags: z.array(z.string()).optional(),
-
+        series: z.string().optional(),
         // z.coerce allows strings to automatically become date objects
         lastModified: z.coerce.date().optional(),
         pubDate: z.coerce.date().optional(),
@@ -40,6 +40,8 @@ const projectCollection = defineCollection({
 
         /* Flavour text or something they call this, for the initial display */
         cardTitle: z.string(),
+        tags: z.array(z.string()).optional(),
+        timeline: z.string().optional(),
     })
 })
 

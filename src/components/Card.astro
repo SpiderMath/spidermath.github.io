@@ -5,6 +5,8 @@ interface Props {
     description?: string;
     date?: Date;
     backgroundImage?: string;
+    tags?: string[];
+    upperBadge?: string;
 }
 
 const {
@@ -13,23 +15,30 @@ const {
     description,
     date,
     backgroundImage,
+    tags,
+    upperBadge
 } = Astro.props;
 
 const formattedDate = date?.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
+    year: "numeric",
+    month: "short",
+    day: "numeric",
 });
 
-const cardBackground = backgroundImage ? "bg-transparent" : "bg-bg-surface";
+// If there's an image, background is transparent so the image shows. 
+// If NO image, we use a sleek gradient fallback instead of a boring flat color.
+const cardBackground = backgroundImage 
+    ? "bg-transparent" 
+    : "bg-gradient-to-br from-bg-surface via-bg-surface to-[var(--color-brand-dark)]/10";
 ---
 
-<a 
-    href={href} 
-    class=`group relative block ${cardBackground} border border-text-muted/30 rounded-xl p-6 transition-all duration-300 hover:border-brand hover:-translate-y-1 hover:shadow-lg no-underline h-full`
+<a
+    href={href}
+    class=`group relative flex flex-col justify-between ${cardBackground} border border-text-muted/30 rounded-xl p-6 transition-all duration-300 hover:border-brand hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10 no-underline h-full oerflow-hidden min-h-[250px]`
 >
+    {/* Background Image Layer */}
     {backgroundImage && (
-        <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
             <div
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                 style={`background-image: url(${backgroundImage})`}
@@ -38,21 +47,36 @@ const cardBackground = backgroundImage ? "bg-transparent" : "bg-bg-surface";
         </div>
     )}
 
-    <div class=`relative h-full overflow-hidden rounded-xl border border-text-muted/30 p-6 transition-all duration-300 transform-gpu group-hover:-translate-y-1 group-hover:shadow-xl group-hover:border-brand ${cardBackground}` >
-        <h3 class="text-xl font-bold text-brand-light group-hover:text-brand mb-2 mt-0">
-            {title}
-        </h3>
-        
-        {date && (
-            <p class="text-sm text-text-muted mb-4 mt-0">
-                {formattedDate}
-            </p>
-        )}
+    {/* Content Layer */}
+    <div class="relative z-10 flex flex-col h-full">
+        <div>
+            {/* Upper Badge (Timeline, Series, or Date) */}
+            {(upperBadge || date) && (
+                <div class="text-xs font-mono text-brand-light/80 mb-3 uppercase tracking-wider">
+                    {upperBadge || formattedDate}
+                </div>
+            )}
 
-        {description && (
-            <p class="text-text-main line-clamp-3 leading-relaxed mt-0">
-                {description}
-            </p>
+            <h3 class="text-xl font-bold text-text-main group-hover:text-brand transition-colors duration-300 mb-3 mt-0 leading-tight">
+                {title}
+            </h3>
+            
+            {description && (
+                <p class="text-sm text-text-muted line-clamp-3 leading-relaxed mt-0">
+                    {description}
+                </p>
+            )}
+        </div>
+
+        {/* Tags Section at the bottom */}
+        {tags && tags.length > 0 && (
+            <div class="mt-6 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                    <span class="text-xs px-2 py-1 rounded border border-text-muted/30 text-text-muted group-hover:border-brand-light/40 group-hover:text-brand-light transition-colors duration-300">
+                        #{tag}
+                    </span>
+                ))}
+            </div>
         )}
     </div>
 </a>
