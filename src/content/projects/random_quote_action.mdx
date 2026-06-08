@@ -1,0 +1,44 @@
+---
+title: Random Quote Action
+description: "A GitHub Action designed to automatically update your repository's README.md (specifically tailored for GitHub profile READMEs) with a randomly selected quote. It keeps your profile fresh by periodically swapping out the quote without you having to lift a finger!"
+projectType: personal
+cardTitle: Random Quote Action
+tags: ["github", "javascript", "github actions", "side-project"]
+timeline: December 2024
+---
+import SocialButton from '../../components/SocialButton.astro';
+import githubIcon from '../../assets/images/socialIcons/github.svg?raw';
+import Icon from "../../components/Icon.astro"
+
+# Random Quote Action
+
+<div class="not-prose -mt-2 mb-12">
+    <SocialButton 
+        link="https://github.com/SpiderMath/Random-Quote-Action" 
+        icon={githubIcon} 
+        label="View Source on GitHub" 
+    />
+</div>
+
+## what is this?
+
+**Random-Quote-Action** is a GitHub Action designed to automatically update your repository's README.md (specifically tailored for GitHub profile READMEs) with a randomly selected quote. It keeps your profile fresh by periodically swapping out the quote without you having to lift a finger!
+
+## why?
+
+Honestly, I just wanted to figure out how custom GitHub Actions actually work under the hood. Along with that, at the time, I really wanted to have something _cool_ on my GitHub profile (those days of naive optimism!). So, obviously, I built this lightweight JavaScript action to figure out how they work, and also get a buncha random cool sounding quotes on my GitHub profile's `README.md`!
+
+All it does is chooses a random quote from a pre-defined set of quotes, and places it in a demarcated section in the `README.md` file of your directory.
+
+## how do i use it?
+
+Planning to put instructions verbatim from the project page? but it's also possible that it may change... I'm confused 
+
+## how does it work?
+
+Firstly, some details:
+
+- Language: **JavaScript** <Icon name="JavaScript" size={20} class="text-[#F7DF1E]"/>
+- Runtime: **Node.js**
+
+## what did i end up learning?
