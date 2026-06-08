@@ -10,36 +10,48 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
 ---
 
 <BaseLayout
-    title="Projects | RishiMath"
-    description="The directory of projects, directed reading programs, and personal developments.">
+    title="projects."
+    description="The directory consisting of my personal projects, academic projects and UDGRPs.">
 
     <div class="not-prose mb-10 space-y-6">
-        <h1 class="text-3xl font-bold text-brand mb-2">Projects & Experiences</h1>
-        <p class="text-text-muted">Filter by category or tag to explore academic research, directed reading programs, and personal coding projects.</p>
-        
+        <h1 class="text-3xl font-bold text-brand mb-2">projects.</h1>
+        <p class="text-text-muted">Filter by category or tag to check out my personal coding projects, UDGRPs, and academic projects!</p>
+
         {/* Filter Control Panel */}
-        <div class="bg-bg-surface border border-text-muted/30 p-4 rounded-xl flex flex-col gap-4">
-            {/* Category Filters */}
-            <div class="flex flex-wrap gap-3 items-center" id="type-filters">
-                <span class="text-sm font-bold text-brand-dark uppercase tracking-widest">Type:</span>
-                <button class="filter-btn active px-3 py-1 text-sm rounded border border-brand bg-brand/10 text-brand-light transition-colors" data-type="all">All</button>
-                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="academic">Academic</button>
-                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="udgrp">UDGRP</button>
-                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="personal">Personal</button>
+        <div class="bg-bg-surface border border-text-muted/30 p-5 rounded-xl flex flex-col gap-5">
+            <div class="flex flex-col sm:flex-row justify-between gap-4">
+                {/* Category Filters */}
+                <div class="flex flex-wrap gap-2 items-center" id="type-filters">
+                    <span class="text-sm font-bold text-brand-dark uppercase tracking-widest mr-2">Type:</span>
+                    <button class="filter-btn active px-3 py-1 text-sm rounded border border-brand bg-brand/10 text-brand-light transition-colors" data-type="all">All</button>
+                    <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="academic">Academic</button>
+                    <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="udgrp">UDGRP</button>
+                    <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="personal">Personal</button>
+                </div>
+
+                {/* Tag Dropdown for Mobile Friendliness */}
+                {allTags.length > 0 && (
+                    <div class="flex items-center gap-2" id="tag-filters">
+                        <label for="tag-select" class="text-sm font-bold text-brand-dark uppercase tracking-widest">Tag:</label>
+                        <select 
+                            id="tag-select" 
+                            class="bg-bg-main border border-text-muted/30 text-text-main text-sm rounded px-3 py-1.5 focus:border-brand outline-none cursor-pointer hover:border-brand-light transition-colors"
+                        >
+                            <option value="all">#all</option>
+                            {allTags.map(tag => (
+                                <option value={tag}>#{tag}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
             </div>
 
-            {/* Tag Filters */}
-            {allTags.length > 0 && (
-                <div class="flex flex-wrap gap-2 items-center" id="tag-filters">
-                    <span class="text-sm font-bold text-brand-dark uppercase tracking-widest mr-1">Tags:</span>
-                    <button class="tag-btn active text-sm text-brand-light font-bold" data-tag="all">#all</button>
-                    {allTags.map(tag => (
-                        <button class="tag-btn text-sm text-text-muted hover:text-brand-light transition-colors" data-tag={tag}>
-                            #{tag}
-                        </button>
-                    ))}
-                </div>
-            )}
+            {/* Dynamic Category Explanation */}
+            <div class="border-t border-text-muted/20 pt-3">
+                <p id="category-description" class="text-sm text-text-muted italic m-0 transition-opacity duration-300">
+                    Showing all projects, including academic projects, UDGRPs, and independent developments.
+                </p>
+            </div>
         </div>
     </div>
 
@@ -82,8 +94,17 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
 
         const items = document.querySelectorAll('.project-item');
         const typeBtns = document.querySelectorAll('.filter-btn');
-        const tagBtns = document.querySelectorAll('.tag-btn');
+        const tagSelect = document.getElementById('tag-select') as HTMLSelectElement;
         const noResults = document.getElementById('no-results');
+        const descText = document.getElementById('category-description');
+
+        // The text for each category
+        const descriptions = {
+            'all': 'Showing all projects, including academic projects, personal projects and UDGRPs.',
+            'academic': 'Formal academic projects undertaken under the guidance of professors or academic institutions.',
+            'udgrp': 'Undergraduate Directed Reading Programs (UDGRP) of the Math Club, ISI Bengaluru Centre, involving group reading projects with peers.',
+            'personal': 'Cool stuff I made!'
+        };
 
         function filterProjects() {
             let visibleCount = 0;
@@ -97,12 +118,11 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
 
                 if (typeMatch && tagMatch) {
                     item.classList.remove('hidden');
-                    // Small timeout to allow display:block to apply before animating opacity
                     setTimeout(() => item.classList.remove('opacity-0', 'scale-95'), 10);
                     visibleCount++;
                 } else {
                     item.classList.add('opacity-0', 'scale-95');
-                    setTimeout(() => item.classList.add('hidden'), 300); // Wait for transition
+                    setTimeout(() => item.classList.add('hidden'), 300);
                 }
             });
 
@@ -111,7 +131,8 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
             }
         }
 
-        function updateActiveButtons() {
+        function updateUI() {
+            // Update buttons
             typeBtns.forEach(btn => {
                 if (btn.getAttribute('data-type') === currentType) {
                     btn.classList.replace('border-text-muted/30', 'border-brand');
@@ -124,43 +145,43 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
                 }
             });
 
-            tagBtns.forEach(btn => {
-                if (btn.getAttribute('data-tag') === currentTag) {
-                    btn.classList.add('text-brand-light', 'font-bold');
-                    btn.classList.remove('text-text-muted');
-                } else {
-                    btn.classList.remove('text-brand-light', 'font-bold');
-                    btn.classList.add('text-text-muted');
-                }
-            });
+            // Update dropdown value
+            if (tagSelect) tagSelect.value = currentTag;
+
+            // Update description text with a smooth fade
+            if (descText) {
+                descText.style.opacity = '0';
+                setTimeout(() => {
+                    descText.textContent = descriptions[currentType as keyof typeof descriptions];
+                    descText.style.opacity = '1';
+                }, 150);
+            }
         }
 
-        // Event Listeners for Top Panel Filters
+        // Top Panel Type Buttons
         typeBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 currentType = (e.target as HTMLElement).getAttribute('data-type') || 'all';
-                updateActiveButtons();
+                updateUI();
                 filterProjects();
             });
         });
 
-        tagBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                currentTag = (e.target as HTMLElement).getAttribute('data-tag') || 'all';
-                updateActiveButtons();
+        // Top Panel Dropdown Change
+        if (tagSelect) {
+            tagSelect.addEventListener('change', (e) => {
+                currentTag = (e.target as HTMLSelectElement).value;
                 filterProjects();
             });
-        });
+        }
 
-        // Event Listeners for Tags on the Cards themselves
+        // Clicking a tag directly on a project card
         document.querySelectorAll('.project-tag').forEach(cardTag => {
             cardTag.addEventListener('click', (e) => {
-                e.preventDefault(); // Stop the card link from navigating away
+                e.preventDefault(); 
                 currentTag = (e.target as HTMLElement).getAttribute('data-tag') || 'all';
-                updateActiveButtons();
+                updateUI();
                 filterProjects();
-                
-                // Scroll smoothly back to the filter bar so the user sees what happened
                 document.getElementById('type-filters')?.scrollIntoView({ behavior: 'smooth', block: 'end' });
             });
         });

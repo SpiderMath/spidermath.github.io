@@ -24,12 +24,32 @@ const formattedDate = date?.toLocaleDateString('en-US', {
 const cardBackground = backgroundImage 
     ? "bg-transparent" 
     : "bg-gradient-to-br from-bg-surface via-bg-surface to-[var(--color-brand-dark)]/10";
+
+// Check if the role is a leadership/teaching position
+// Apply distinct glowing borders if it's a leadership role
+const isLeadership = role && ['mentor', 'conductor', 'instructor', 'organizer'].some(r => role.toLowerCase().includes(r));
+
+const borderStyle = isLeadership 
+    ? "border-brand/60 shadow-md shadow-brand/10" 
+    : "border-text-muted/30";
+
+const hoverStyle = isLeadership
+    ? "hover:border-brand-light hover:shadow-xl hover:shadow-brand/30"
+    : "hover:border-brand hover:shadow-lg hover:shadow-brand/10";
 ---
 
 <a 
     href={href} 
-    class=`group relative flex flex-col justify-between ${cardBackground} border border-text-muted/30 rounded-xl p-6 transition-all duration-300 hover:border-brand hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10 no-underline h-full overflow-hidden min-h-[280px]`
+    class={`group relative flex flex-col justify-between ${cardBackground} border ${borderStyle} rounded-xl p-6 transition-all duration-300 ${hoverStyle} hover:-translate-y-1 no-underline h-full overflow-hidden min-h-[280px]`}
 >
+    {/* The Bold Corner Badge for Conductors/Mentors */}
+    {isLeadership && (
+        <div class="absolute top-0 right-0 bg-brand text-bg-main text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 uppercase tracking-widest shadow-sm">
+            {role}
+        </div>
+    )}
+
+    {/* Background Image Layer */}
     {backgroundImage && (
         <div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
             <div
