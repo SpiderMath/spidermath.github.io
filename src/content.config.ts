@@ -42,6 +42,9 @@ const projectCollection = defineCollection({
         cardTitle: z.string(),
         tags: z.array(z.string()).optional(),
         timeline: z.string().optional(),
+        role: z.string().optional(), 
+        institution: z.string().optional(),
+        supervisor: z.string().optional(),
     })
 })
 

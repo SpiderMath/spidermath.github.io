@@ -5,61 +5,164 @@ import Card from "../../components/Card.astro";
 
 const projects = await getCollection("projects");
 
-const academicProjects = projects.filter((proj) => proj.data.projectType === "academic");
-const udgrps = projects.filter((proj) => proj.data.projectType === "udgrp");
-const personalProjects = projects.filter((proj) => proj.data.projectType === "personal");
+// Extract all unique tags dynamically for the filter bar
+const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sort();
 ---
 
 <BaseLayout
-	title="projects."
-	description="The directory of projects done by myself in the last while I guess?">
+    title="Projects | RishiMath"
+    description="The directory of projects, directed reading programs, and personal developments.">
 
-	<h2>Academic Projects</h2>
+    <div class="not-prose mb-10 space-y-6">
+        <h1 class="text-3xl font-bold text-brand mb-2">Projects & Experiences</h1>
+        <p class="text-text-muted">Filter by category or tag to explore academic research, directed reading programs, and personal coding projects.</p>
+        
+        {/* Filter Control Panel */}
+        <div class="bg-bg-surface border border-text-muted/30 p-4 rounded-xl flex flex-col gap-4">
+            {/* Category Filters */}
+            <div class="flex flex-wrap gap-3 items-center" id="type-filters">
+                <span class="text-sm font-bold text-brand-dark uppercase tracking-widest">Type:</span>
+                <button class="filter-btn active px-3 py-1 text-sm rounded border border-brand bg-brand/10 text-brand-light transition-colors" data-type="all">All</button>
+                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="academic">Academic</button>
+                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="udgrp">UDGRP</button>
+                <button class="filter-btn px-3 py-1 text-sm rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light transition-colors" data-type="personal">Personal</button>
+            </div>
 
-	<div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Tag Filters */}
+            {allTags.length > 0 && (
+                <div class="flex flex-wrap gap-2 items-center" id="tag-filters">
+                    <span class="text-sm font-bold text-brand-dark uppercase tracking-widest mr-1">Tags:</span>
+                    <button class="tag-btn active text-sm text-brand-light font-bold" data-tag="all">#all</button>
+                    {allTags.map(tag => (
+                        <button class="tag-btn text-sm text-text-muted hover:text-brand-light transition-colors" data-tag={tag}>
+                            #{tag}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    </div>
+
+    {/* Project Grid */}
+    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6" id="project-grid">
         {
-            academicProjects.map((post) => (
-                <Card
-                    title={post.data.cardTitle}
-                    href={`/projects/${post.id}`}
-                    description={post.data.description}
-                    backgroundImage={post.data.backgroundImage}
-                    tags={post.data.tags}
-                    upperBadge={post.data.timeline} 
-                />
+            projects.map((post) => (
+                <div 
+                    class="project-item transition-all duration-500 ease-in-out" 
+                    data-type={post.data.projectType} 
+                    data-tags={post.data.tags?.join(',')}
+                >
+                    <Card
+                        title={post.data.cardTitle}
+                        href={`/projects/${post.id}`}
+                        description={post.data.description}
+                        backgroundImage={post.data.backgroundImage}
+                        tags={post.data.tags}
+                        upperBadge={post.data.timeline}
+                        role={post.data.role}
+                        institution={post.data.institution}
+                        supervisor={post.data.supervisor}
+                    />
+                </div>
             ))
         }
     </div>
 
-    <h2>Undergraduate Directed Reading Projects (UDGRPs)</h2>
-    <p> UDGRP (Undergraduate Directed Reading Program) is a program of the Math Club, ISI Bengaluru Centre, where BMath (and sometimes MMath) students conduct group reading projects with fellow batchmates and juniors. </p>
-    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
-        {
-            udgrps.map((post) => (
-                <Card
-                    title={post.data.cardTitle}
-                    href={`/projects/${post.id}`}
-                    description={post.data.description}
-                    backgroundImage={post.data.backgroundImage}
-                    tags={post.data.tags}
-                    upperBadge={post.data.timeline} 
-                />
-            ))
-        }
+    {/* No Results Message (Hidden by default) */}
+    <div id="no-results" class="hidden text-center py-10 text-text-muted italic">
+        No projects found matching the selected filters.
     </div>
 
-    <h2>Personal Projects</h2>
-
-    <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6">
-        {
-            personalProjects.map((post) => (
-                <Card
-                    title={post.data.cardTitle}
-                    href={`/projects/${post.id}`}
-                    description={post.data.description}
-                    backgroundImage={post.data.backgroundImage}
-                />
-            ))
-        }
-    </div>
 </BaseLayout>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        let currentType = 'all';
+        let currentTag = 'all';
+
+        const items = document.querySelectorAll('.project-item');
+        const typeBtns = document.querySelectorAll('.filter-btn');
+        const tagBtns = document.querySelectorAll('.tag-btn');
+        const noResults = document.getElementById('no-results');
+
+        function filterProjects() {
+            let visibleCount = 0;
+
+            items.forEach((item) => {
+                const itemType = item.getAttribute('data-type');
+                const itemTags = item.getAttribute('data-tags')?.split(',') || [];
+                
+                const typeMatch = currentType === 'all' || itemType === currentType;
+                const tagMatch = currentTag === 'all' || itemTags.includes(currentTag);
+
+                if (typeMatch && tagMatch) {
+                    item.classList.remove('hidden');
+                    // Small timeout to allow display:block to apply before animating opacity
+                    setTimeout(() => item.classList.remove('opacity-0', 'scale-95'), 10);
+                    visibleCount++;
+                } else {
+                    item.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => item.classList.add('hidden'), 300); // Wait for transition
+                }
+            });
+
+            if (noResults) {
+                visibleCount === 0 ? noResults.classList.remove('hidden') : noResults.classList.add('hidden');
+            }
+        }
+
+        function updateActiveButtons() {
+            typeBtns.forEach(btn => {
+                if (btn.getAttribute('data-type') === currentType) {
+                    btn.classList.replace('border-text-muted/30', 'border-brand');
+                    btn.classList.replace('text-text-muted', 'text-brand-light');
+                    btn.classList.add('bg-brand/10');
+                } else {
+                    btn.classList.replace('border-brand', 'border-text-muted/30');
+                    btn.classList.replace('text-brand-light', 'text-text-muted');
+                    btn.classList.remove('bg-brand/10');
+                }
+            });
+
+            tagBtns.forEach(btn => {
+                if (btn.getAttribute('data-tag') === currentTag) {
+                    btn.classList.add('text-brand-light', 'font-bold');
+                    btn.classList.remove('text-text-muted');
+                } else {
+                    btn.classList.remove('text-brand-light', 'font-bold');
+                    btn.classList.add('text-text-muted');
+                }
+            });
+        }
+
+        // Event Listeners for Top Panel Filters
+        typeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currentType = (e.target as HTMLElement).getAttribute('data-type') || 'all';
+                updateActiveButtons();
+                filterProjects();
+            });
+        });
+
+        tagBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currentTag = (e.target as HTMLElement).getAttribute('data-tag') || 'all';
+                updateActiveButtons();
+                filterProjects();
+            });
+        });
+
+        // Event Listeners for Tags on the Cards themselves
+        document.querySelectorAll('.project-tag').forEach(cardTag => {
+            cardTag.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop the card link from navigating away
+                currentTag = (e.target as HTMLElement).getAttribute('data-tag') || 'all';
+                updateActiveButtons();
+                filterProjects();
+                
+                // Scroll smoothly back to the filter bar so the user sees what happened
+                document.getElementById('type-filters')?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            });
+        });
+    });
+</script>

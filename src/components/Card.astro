@@ -7,36 +7,29 @@ interface Props {
     backgroundImage?: string;
     tags?: string[];
     upperBadge?: string;
+    role?: string;
+    institution?: string;
+    supervisor?: string;
 }
 
 const {
-    title,
-    href,
-    description,
-    date,
-    backgroundImage,
-    tags,
-    upperBadge
+    title, href, description, date, backgroundImage, 
+    tags, upperBadge, role, institution, supervisor
 } = Astro.props;
 
 const formattedDate = date?.toLocaleDateString('en-US', {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric', month: 'short', day: 'numeric'
 });
 
-// If there's an image, background is transparent so the image shows. 
-// If NO image, we use a sleek gradient fallback instead of a boring flat color.
 const cardBackground = backgroundImage 
     ? "bg-transparent" 
     : "bg-gradient-to-br from-bg-surface via-bg-surface to-[var(--color-brand-dark)]/10";
 ---
 
-<a
-    href={href}
-    class=`group relative flex flex-col justify-between ${cardBackground} border border-text-muted/30 rounded-xl p-6 transition-all duration-300 hover:border-brand hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10 no-underline h-full oerflow-hidden min-h-[250px]`
+<a 
+    href={href} 
+    class=`group relative flex flex-col justify-between ${cardBackground} border border-text-muted/30 rounded-xl p-6 transition-all duration-300 hover:border-brand hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10 no-underline h-full overflow-hidden min-h-[280px]`
 >
-    {/* Background Image Layer */}
     {backgroundImage && (
         <div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
             <div
@@ -47,19 +40,27 @@ const cardBackground = backgroundImage
         </div>
     )}
 
-    {/* Content Layer */}
     <div class="relative z-10 flex flex-col h-full">
         <div>
-            {/* Upper Badge (Timeline, Series, or Date) */}
-            {(upperBadge || date) && (
-                <div class="text-xs font-mono text-brand-light/80 mb-3 uppercase tracking-wider">
+            {/* Upper Badge / Timeline */}
+            {(upperBadge || formattedDate) && (
+                <div class="text-xs font-mono text-brand-light/80 mb-2 uppercase tracking-wider">
                     {upperBadge || formattedDate}
                 </div>
             )}
 
-            <h3 class="text-xl font-bold text-text-main group-hover:text-brand transition-colors duration-300 mb-3 mt-0 leading-tight">
+            <h3 class="text-xl font-bold text-text-main group-hover:text-brand transition-colors duration-300 mb-2 mt-0 leading-tight">
                 {title}
             </h3>
+
+            {/* Academic Meta Info */}
+            {(role || institution || supervisor) && (
+                <div class="text-xs text-text-muted mb-3 space-y-1 font-mono">
+                    {role && <div><span class="text-brand-dark">Role:</span> {role}</div>}
+                    {institution && <div><span class="text-brand-dark">Inst:</span> {institution}</div>}
+                    {supervisor && <div><span class="text-brand-dark">Supr:</span> {supervisor}</div>}
+                </div>
+            )}
             
             {description && (
                 <p class="text-sm text-text-muted line-clamp-3 leading-relaxed mt-0">
@@ -68,13 +69,17 @@ const cardBackground = backgroundImage
             )}
         </div>
 
-        {/* Tags Section at the bottom */}
+        {/* Tags Section */}
         {tags && tags.length > 0 && (
             <div class="mt-6 flex flex-wrap gap-2">
                 {tags.map((tag) => (
-                    <span class="text-xs px-2 py-1 rounded border border-text-muted/30 text-text-muted group-hover:border-brand-light/40 group-hover:text-brand-light transition-colors duration-300">
+                    <button 
+                        class="project-tag z-20 relative text-xs px-2 py-1 rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light hover:bg-bg-surface transition-all duration-300 cursor-pointer"
+                        data-tag={tag}
+                        aria-label={`Filter by ${tag}`}
+                    >
                         #{tag}
-                    </span>
+                    </button>
                 ))}
             </div>
         )}
