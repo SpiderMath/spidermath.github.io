@@ -21,10 +21,10 @@ const allSeries = [...new Set(posts.map(post => post.data.series).filter(Boolean
 const allTypes = [...new Set(posts.map(post => post.data.type).filter(Boolean))].sort();
 ---
 
-<BaseLayout title="blog." description="A personal notepad of thoughts, and expression">
+<BaseLayout title="blog." description="A personal notepad of thoughts and expression">
+    <h1 class="tracking-widest font-mono">blog.</h1>
     <div class="not-prose mb-10 space-y-6">
-        <h1 class="tracking-widest font-mono">blog.</h1>
-        <p class="text-text-muted">A personal notepad of thoughts, and expression.</p>
+        <p class="text-text-muted">A personal notepad of thoughts and expression.</p>
 
         {/* Filter Control Panel */}
         <div class="bg-bg-surface border border-text-muted/30 p-5 rounded-xl flex flex-col gap-5">
