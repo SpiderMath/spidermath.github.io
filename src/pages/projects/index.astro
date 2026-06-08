@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro"
 import { getCollection } from "astro:content";
-import Card from "../../components/Card.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
 
 const projects = await getCollection("projects");
 
@@ -64,13 +64,13 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
                     data-type={post.data.projectType} 
                     data-tags={post.data.tags?.join(',')}
                 >
-                    <Card
+                    <ProjectCard
                         title={post.data.cardTitle}
                         href={`/projects/${post.id}`}
                         description={post.data.description}
                         backgroundImage={post.data.backgroundImage}
                         tags={post.data.tags}
-                        upperBadge={post.data.timeline}
+                        timeline={post.data.timeline}
                         role={post.data.role}
                         institution={post.data.institution}
                         supervisor={post.data.supervisor}

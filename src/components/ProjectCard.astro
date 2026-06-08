@@ -1,0 +1,75 @@
+---
+import BaseCard from "./BaseCard.astro";
+
+interface Props {
+    title: string;
+    href: string;
+    description?: string;
+    backgroundImage?: string;
+    tags?: string[];
+    timeline?: string;
+    role?: string;
+    institution?: string;
+    supervisor?: string;
+}
+
+const {
+    title, href, description, backgroundImage, tags, timeline, role, institution, supervisor
+} = Astro.props;
+
+const isLeadership = role && ['mentor', 'conductor', 'instructor', 'organizer'].some(r => role.toLowerCase().includes(r));
+
+// Pass the glowing styling to the base card if it's a leadership role
+const customBorder = isLeadership 
+    ? "border-brand/60 shadow-md shadow-brand/10 hover:border-brand-light hover:shadow-xl hover:shadow-brand/30" 
+    : "border-text-muted/30 hover:border-brand hover:shadow-lg hover:shadow-brand/10";
+---
+
+<BaseCard href={href} backgroundImage={backgroundImage} wrapperClasses={customBorder}>
+
+    {/* Leadership Badge (Absolute positioned within the relative card body) */}
+    {isLeadership && (
+        <div class="absolute -top-6 -right-6 bg-brand text-bg-main text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 uppercase tracking-widest shadow-sm">
+            {role}
+        </div>
+    )}
+
+    <div>
+        {timeline && (
+            <div class="text-xs font-mono text-brand-light/80 mb-2 uppercase tracking-wider">
+                {timeline}
+            </div>
+        )}
+
+        <h3 class="text-xl font-bold text-text-main group-hover:text-brand transition-colors duration-300 mb-2 mt-0 leading-tight">
+            {title}
+        </h3>
+
+        {(role || institution || supervisor) && (
+            <div class="text-xs text-text-muted mb-3 space-y-1 font-mono">
+                {role && <div><span class="text-brand-dark">Role:</span> {role}</div>}
+                {institution && <div><span class="text-brand-dark">Inst:</span> {institution}</div>}
+                {supervisor && <div><span class="text-brand-dark">Supr:</span> {supervisor}</div>}
+            </div>
+        )}
+        
+        {description && (
+            <p class="text-sm text-text-muted line-clamp-3 leading-relaxed mt-0">
+                {description}
+            </p>
+        )}
+    </div>
+
+    {tags && tags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+                <button 
+                    class="project-tag z-20 relative text-xs px-2 py-1 rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light hover:bg-bg-surface transition-all duration-300 cursor-pointer"
+                    data-tag={tag}
+                >
+                    #{tag}
+                </button>
+            ))}
+        </div>
+    )}
+</Card>

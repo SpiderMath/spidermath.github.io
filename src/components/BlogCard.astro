@@ -1,0 +1,54 @@
+---
+import BaseCard from "./BaseCard.astro";
+
+interface Props {
+    title: string;
+    href: string;
+    description?: string;
+    date?: Date;
+    backgroundImage?: string;
+    tags?: string[];
+    series?: string;
+}
+
+const {
+    title, href, description, date, backgroundImage, tags, series
+} = Astro.props;
+
+const formattedDate = date?.toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric'
+});
+---
+
+<BaseCard href={href} backgroundImage={backgroundImage}>
+    <div>
+        {(series || formattedDate) && (
+            <div class="text-xs font-mono text-brand-light/80 mb-3 uppercase tracking-wider">
+                {series ? `Series: ${series}` : formattedDate}
+            </div>
+        )}
+
+        <h3 class="text-xl font-bold text-text-main group-hover:text-brand transition-colors duration-300 mb-3 mt-0 leading-tight">
+            {title}
+        </h3>
+        
+        {description && (
+            <p class="text-sm text-text-muted line-clamp-3 leading-relaxed mt-0">
+                {description}
+            </p>
+        )}
+    </div>
+
+    {tags && tags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+                <button 
+                    class="project-tag z-20 relative text-xs px-2 py-1 rounded border border-text-muted/30 text-text-muted hover:border-brand-light hover:text-brand-light hover:bg-bg-surface transition-all duration-300 cursor-pointer"
+                    data-tag={tag}
+                >
+                    #{tag}
+                </button>
+            ))}
+        </div>
+    )}
+</BaseCard>

@@ -1,0 +1,39 @@
+---
+interface Props {
+    href: string;
+    backgroundImage?: string;
+    // Allows wrappers to override the default border/shadow classes, don't screw this up :-(
+    wrapperClasses?: string; 
+}
+
+const { 
+    href, 
+    backgroundImage, 
+    wrapperClasses = "border-text-muted/30 hover:border-brand hover:shadow-lg hover:shadow-brand/10" 
+} = Astro.props;
+
+const backgroundFallback = backgroundImage 
+    ? "bg-transparent" 
+    : "bg-gradient-to-br from-bg-surface via-bg-surface to-[var(--color-brand-dark)]/10";
+---
+
+<a 
+    href={href} 
+    class={`group relative flex flex-col justify-between ${backgroundFallback} border ${wrapperClasses} rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 no-underline h-full overflow-hidden min-h-[280px]`}
+>
+    {/* Background Image Layer */}
+    {backgroundImage && (
+        <div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
+            <div
+                class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                style={`background-image: url(${backgroundImage})`}
+            ></div>
+            <div class="absolute inset-0 bg-bg-main/85 backdrop-blur-sm transition-opacity duration-300 group-hover:bg-bg-main/75"></div>
+        </div>
+    )}
+
+    {/* Content Portal */}
+    <div class="relative z-10 flex flex-col h-full">
+        <slot />
+    </div>
+</a>
