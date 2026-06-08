@@ -15,6 +15,7 @@ const blogCollection = defineCollection({
         backgroundImage: z.string().optional(),
         tags: z.array(z.string()).optional(),
         series: z.string().optional(),
+        type: z.string(), // what kinda blog is this?? that's what this defines
         // z.coerce allows strings to automatically become date objects
         lastModified: z.coerce.date().optional(),
         pubDate: z.coerce.date().optional(),

@@ -6,7 +6,12 @@ import ProjectCard from "../../components/ProjectCard.astro";
 const projects = await getCollection("projects");
 
 // Extract all unique tags dynamically for the filter bar
-const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sort();
+const tagCounts = projects.flatMap(post => post.data.tags || []).reduce((acc: Record<string, number>, tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+    return acc;
+}, {} as Record<string, number>);
+
+const allTags = Object.keys(tagCounts).sort();
 ---
 
 <BaseLayout
@@ -32,16 +37,22 @@ const allTags = [...new Set(projects.flatMap(post => post.data.tags || []))].sor
                 {/* Tag Dropdown for Mobile Friendliness */}
                 {allTags.length > 0 && (
                     <div class="flex items-center gap-2" id="tag-filters">
-                        <label for="tag-select" class="text-sm font-bold text-brand-dark uppercase tracking-widest">Tag:</label>
-                        <select 
-                            id="tag-select" 
-                            class="bg-bg-main border border-text-muted/30 text-text-main text-sm rounded px-3 py-1.5 focus:border-brand outline-none cursor-pointer hover:border-brand-light transition-colors"
-                        >
-                            <option value="all">#all</option>
-                            {allTags.map(tag => (
-                                <option value={tag}>#{tag}</option>
-                            ))}
-                        </select>
+                        <label for="tag-select" class="text-sm font-bold text-brand-dark uppercase tracking-widest hidden sm:block">Tag:</label>
+                        
+                        <div class="relative flex items-center">
+                            <select 
+                                id="tag-select" 
+                                class="bg-bg-main border border-text-muted/30 text-text-main text-sm rounded py-1.5 pl-3 pr-10 focus:border-brand outline-none cursor-pointer hover:border-brand-light transition-colors max-w-[180px] truncate appearance-none"
+                            >
+                                <option value="all">All Tags</option>
+                                {allTags.map(tag => (
+                                    <option value={tag}>{tag} ({tagCounts[tag]})</option>
+                                ))}
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-3 pointer-events-none text-text-muted">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
                     </div>
                 )}
             </div>
