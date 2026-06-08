@@ -15,8 +15,52 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
+
+const allPosts = await getCollection("blogs");
+const seriesPosts = entry.data.series 
+    ? allPosts
+        .filter(p => p.data.series === entry.data.series)
+        .sort((a, b) => (a.data.pubDate?.valueOf() || 0) - (b.data.pubDate?.valueOf() || 0))
+    : [];
 ---
 
 <MarkdownLayout frontmatter={entry.data} headings={headings}>
+    {/* dealing with series */}
+    {entry.data.series && seriesPosts.length > 1 && (
+        <details class="mb-10 border border-text-muted/20 rounded-xl bg-bg-main/30 backdrop-blur-sm overflow-hidden transition-all group open:border-brand/40 shadow-sm">
+            <summary class="cursor-pointer px-6 py-4 font-bold text-brand-light flex items-center justify-between hover:bg-bg-surface/40 list-none transition-colors">
+                <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                    <span class="text-text-muted text-xs uppercase tracking-widest font-mono shrink-0">Series:</span>
+                    <span class="text-lg leading-tight">{entry.data.series}</span>
+                </div>
+                
+                {/* Clean SVG Chevron Arrow */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-muted shrink-0 transition-transform duration-300 group-open:rotate-180 ml-4">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </summary>
+            
+            <div class="px-6 py-5 border-t border-text-muted/10 bg-bg-surface/20">
+                <ul class="space-y-4 m-0 p-0 list-none">
+                    {seriesPosts.map((seriesPost, index) => (
+                        <li class="flex items-start gap-3 text-base">
+                            <span class="text-text-muted font-mono w-6 text-right shrink-0 mt-0.5">{index + 1}.</span>
+                            {seriesPost.id === entry.id ? (
+                                <span class="text-brand font-bold flex flex-wrap items-center gap-2 leading-tight">
+                                    {seriesPost.data.title}
+                                    <span class="text-[10px] bg-brand/10 border border-brand/20 text-brand px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0">Current</span>
+                                </span>
+                            ) : (
+                                <a href={`/blog/${seriesPost.id}`} class="text-text-main hover:text-brand-light transition-colors no-underline leading-tight block">
+                                    {seriesPost.data.title}
+                                </a>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </details>
+    )}
+
     <Content />
 </MarkdownLayout>
